@@ -32,10 +32,17 @@
 //
 
 import UIKit
+import AVKit
+import AVFoundation
 
 /// The scrolling overview step view controller is a custom subclass of the overview step view controller
 /// that uses a scrollview to allow showing detailed overview instructions.
 open class RSDScrollingOverviewStepViewController: RSDOverviewStepViewController {
+    
+    /// Retuns the imageView, in this case the image from the navigationHeader.
+    open var imageView: UIImageView? {
+        return self.navigationHeader?.imageView
+    }
 
     /// The label which tells the user about the icons. Typically displays
     /// "This is what you'll need".
@@ -54,6 +61,12 @@ open class RSDScrollingOverviewStepViewController: RSDOverviewStepViewController
     @IBOutlet
     open var iconImages: [UIImageView]!
     
+    /// The constraint that sets the distance between the icon images and their leading/trailing edge.
+    @IBOutlet
+    var iconImagesLeadingConstraint: NSLayoutConstraint!
+    @IBOutlet
+    var iconImagesTrailingConstraint: NSLayoutConstraint!
+    
     /// The labels to display the titles of the icons on.
     @IBOutlet
     open var iconTitles: [UILabel]!
@@ -62,9 +75,16 @@ open class RSDScrollingOverviewStepViewController: RSDOverviewStepViewController
     @IBOutlet
     open var infoButton: UIButton!
     
+    /// The button that when pressed displays an instuctional video.
+    @IBOutlet
+    open var seeThisInActionButton: UIButton!
+    
     /// The scroll view that contains the elements which scroll.
     @IBOutlet
     open var scrollView: UIScrollView!
+    
+    /// The constraint that sets the image height.
+    @IBOutlet var imageViewHeightConstraint: NSLayoutConstraint?
     
     /// Overrides viewWillAppear to add an info button, display the icons, to save
     /// the current Date to UserDefaults, and to use the saved date to decide whether
@@ -87,6 +107,22 @@ open class RSDScrollingOverviewStepViewController: RSDOverviewStepViewController
             for (idx, iconInfo) in icons.enumerated() {
                 iconImages[idx].image = iconInfo.icon?.embeddedImage()
                 iconTitles[idx].text = iconInfo.title
+            }
+            
+            // When there are only 2 icons, we need to make adjustments to center them
+            if (icons.count == 2) {
+                let removeIdx = 2
+                
+                // Adjust margin factor to give smaller screens more room
+                let cellWidth = (iconImages[removeIdx].superview?.superview?.frame.size.width ?? 0) / CGFloat(iconImages.count)
+                let marginFactor: CGFloat = (cellWidth < 125) ? 3.0 : 2.0
+                
+                // First, Adjust the leading/trailing spacing
+                iconImagesLeadingConstraint.constant = cellWidth / marginFactor
+                iconImagesTrailingConstraint.constant = cellWidth / marginFactor
+                
+                // Then, remove the third icon from the stack view
+                iconImages[removeIdx].superview?.removeFromSuperview()
             }
         }
         
@@ -118,6 +154,28 @@ open class RSDScrollingOverviewStepViewController: RSDOverviewStepViewController
         guard let placementType = self.imageTheme?.placementType else { return }
         let statusBarHeight = UIApplication.shared.statusBarFrame.height
         self.scrollViewBackgroundHeightConstraint.constant = (placementType == .topMarginBackground) ? statusBarHeight : CGFloat(0)
+        
+        // Update the image placement for aspect resize behavior.
+        if let imageView = self.imageView {
+            imageView.contentMode = .scaleAspectFit
+            if let fetchable = self.imageTheme as? RSDFetchableImageThemeElementObject {
+                fetchable.fetchImage(for: .zero, callback: { (id, image) in
+                    self.updateImageAspectSize(for: image, with: self.imageView?.frame.size.width)
+                })
+            } else if let animated = self.imageTheme as? RSDAnimatedImageThemeElementObject {
+                animated.fetchImage(for: .zero) { (image) in
+                    self.updateImageAspectSize(for: image, with: self.imageView?.frame.size.width)
+                }
+            }
+        }
+    }
+        
+    private func updateImageAspectSize(for image: RSDImage?, with width: CGFloat?) {
+        guard let imageUnwrapped = image, let widthUnwrapped = width else { return }
+        let height = (imageUnwrapped.size.height / imageUnwrapped.size.width) * widthUnwrapped
+        self.imageViewHeightConstraint?.constant = height
+        self.view.setNeedsUpdateConstraints()
+        self.view.setNeedsLayout()
     }
     
     override open func setColorStyle(for placement: RSDColorPlacement, background: RSDColorTile) {
@@ -126,6 +184,10 @@ open class RSDScrollingOverviewStepViewController: RSDOverviewStepViewController
         if placement == .body {
             
             scrollView.backgroundColor = background.color
+            
+            self.stepTitleLabel?.textColor = self.designSystem.colorRules.textColor(on: background, for: .heading1)
+            self.stepTitleLabel?.font = self.designSystem.fontRules.font(for: .heading1)
+            
             iconViewLabel.text = Localization.localizedString("OVERVIEW_WHAT_YOU_NEED")
             iconViewLabel.textColor = self.designSystem.colorRules.textColor(on: background, for: .fieldHeader)
             iconViewLabel.font = self.designSystem.fontRules.font(for: .fieldHeader)
@@ -136,6 +198,42 @@ open class RSDScrollingOverviewStepViewController: RSDOverviewStepViewController
                 $0.textColor = textColor
                 $0.font = font
             }
+            
+            seeThisInActionButton.titleLabel?.font = self.designSystem.fontRules.font(for: .body)
+            seeThisInActionButton.setTitleColor(self.designSystem.colorRules.textColor(on: background, for: .body), for: .normal)
+        }
+    }
+    
+    @IBAction func seeThisInActionTapped() {
+        self.showSeeThisInAction()
+    }
+    
+    open func showSeeThisInAction() {
+        guard let overviewStep = self.stepViewModel.step as? RSDOverviewStepObject else {
+            debugPrint("Step not of type RSDOverviewStepObject")
+            return
+        }
+        
+        guard let videoName = overviewStep.videoResourceName else {
+            debugPrint("No video resource name")
+            return
+        }
+        
+        guard let videoBundle = Bundle(identifier: overviewStep.videoBundleIdentifier ?? "") else {
+            debugPrint("Could not find video bundle from videoBundleIdentifier")
+            return
+        }
+        
+        guard let path = videoBundle.path(forResource: videoName, ofType:"mp4") else {
+            debugPrint("\(videoName).mp4 not found")
+            return
+        }
+        
+        let player = AVPlayer(url: URL(fileURLWithPath: path))
+        let playerController = AVPlayerViewController()
+        playerController.player = player
+        present(playerController, animated: true) {
+            player.play()
         }
     }
     

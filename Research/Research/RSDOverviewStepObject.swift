@@ -39,11 +39,17 @@ import Foundation
 open class RSDOverviewStepObject : RSDUIStepObject, RSDOverviewStep {
 
     private enum CodingKeys: String, CodingKey, CaseIterable {
-        case icons
+        case icons, videoResourceName, videoBundleIdentifier
     }
     
     /// The icons that are used to define the list of things you will need for an active task.
     open var icons: [RSDIconInfo]?
+    
+    /// Bundle identifier for the video file
+    public var videoBundleIdentifier: String?
+    
+    /// Name of the mp4 resource of the video file
+    public var videoResourceName: String?
     
     /// Default type is `.overview`.
     open override class func defaultType() -> RSDStepType {
@@ -58,6 +64,8 @@ open class RSDOverviewStepObject : RSDUIStepObject, RSDOverviewStep {
             return
         }
         subclassCopy.icons = self.icons
+        subclassCopy.videoResourceName = self.videoResourceName
+        subclassCopy.videoBundleIdentifier = self.videoBundleIdentifier
     }
     
     /// Override the decoder per device type b/c the task may require a different set of permissions depending upon the device.
@@ -65,6 +73,8 @@ open class RSDOverviewStepObject : RSDUIStepObject, RSDOverviewStep {
         try super.decode(from: decoder, for: deviceType)
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.icons = try container.decodeIfPresent([RSDIconInfo].self, forKey: .icons) ?? self.icons
+        self.videoResourceName = try container.decodeIfPresent(String.self, forKey: .videoResourceName)
+        self.videoBundleIdentifier = try container.decodeIfPresent(String.self, forKey: .videoBundleIdentifier)
     }
     
     // Overrides must be defined in the base implementation
@@ -83,6 +93,8 @@ open class RSDOverviewStepObject : RSDUIStepObject, RSDOverviewStep {
             "title": "Hello World!",
             "text": "Some text.",
             "permissions" : [["permissionType": "location"]],
+            "videoResourceName": "instructional_video.mp4",
+            "videoBundleIdentifier": "org.sagebionetworks.MotorControl",
             "icons": [ [ "icon":"Foo1", "title": "A SMOOTH SURFACE"] ]
         ]
         
