@@ -256,10 +256,10 @@ Eget gravida cum sociis natoque penatibus et magnis dis parturient. Eget duis at
                     <state key="normal" image="infoIcon"/>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MAO-q7-fPw" userLabel="Cancel Button">
-                    <rect key="frame" x="20" y="64" width="32" height="32"/>
+                    <rect key="frame" x="8" y="52" width="50" height="50"/>
                     <constraints>
                         <constraint firstAttribute="width" secondItem="MAO-q7-fPw" secondAttribute="height" multiplier="1:1" id="FQP-6M-XIU"/>
-                        <constraint firstAttribute="width" constant="32" id="oUt-Bl-kZX"/>
+                        <constraint firstAttribute="width" constant="50" id="oUt-Bl-kZX"/>
                     </constraints>
                     <state key="normal" image="closeActivity"/>
                 </button>
@@ -281,12 +281,12 @@ Eget gravida cum sociis natoque penatibus et magnis dis parturient. Eget duis at
                 <constraint firstItem="F9g-BT-NE0" firstAttribute="trailing" secondItem="W8i-xX-fUy" secondAttribute="trailing" constant="-20" id="2Rv-nd-dGH"/>
                 <constraint firstItem="2XD-eO-28i" firstAttribute="leading" secondItem="W8i-xX-fUy" secondAttribute="leading" id="LCe-4w-dHa"/>
                 <constraint firstItem="beo-bQ-opC" firstAttribute="top" secondItem="Be1-UX-e65" secondAttribute="top" id="YQM-Xi-5bQ"/>
-                <constraint firstItem="MAO-q7-fPw" firstAttribute="leading" secondItem="W8i-xX-fUy" secondAttribute="leading" constant="20" id="bCg-Fb-Uu4"/>
+                <constraint firstItem="MAO-q7-fPw" firstAttribute="leading" secondItem="W8i-xX-fUy" secondAttribute="leading" constant="8" id="bCg-Fb-Uu4"/>
                 <constraint firstItem="beo-bQ-opC" firstAttribute="trailing" secondItem="W8i-xX-fUy" secondAttribute="trailing" id="dHx-It-f3L"/>
                 <constraint firstItem="2XD-eO-28i" firstAttribute="top" secondItem="beo-bQ-opC" secondAttribute="bottom" id="hMb-Is-sed"/>
                 <constraint firstItem="2XD-eO-28i" firstAttribute="bottom" secondItem="W8i-xX-fUy" secondAttribute="bottom" id="rMT-tK-CD7"/>
                 <constraint firstItem="W8i-xX-fUy" firstAttribute="trailing" secondItem="2XD-eO-28i" secondAttribute="trailing" id="uGL-bY-LFB"/>
-                <constraint firstItem="W8i-xX-fUy" firstAttribute="top" secondItem="MAO-q7-fPw" secondAttribute="top" constant="-20" id="uYC-O5-U6m"/>
+                <constraint firstItem="W8i-xX-fUy" firstAttribute="top" secondItem="MAO-q7-fPw" secondAttribute="top" constant="-8" id="uYC-O5-U6m"/>
                 <constraint firstItem="beo-bQ-opC" firstAttribute="leading" secondItem="W8i-xX-fUy" secondAttribute="leading" id="una-hR-6Ec"/>
                 <constraint firstItem="W8i-xX-fUy" firstAttribute="top" secondItem="F9g-BT-NE0" secondAttribute="top" constant="-20" id="vJ0-k7-vpg"/>
                 <constraint firstItem="nCy-4g-nIJ" firstAttribute="width" secondItem="W8i-xX-fUy" secondAttribute="width" id="w5s-rs-t30"/>
@@ -303,7 +303,7 @@ Eget gravida cum sociis natoque penatibus et magnis dis parturient. Eget duis at
     <resources>
         <image name="IconPlaceholder" width="68" height="68"/>
         <image name="InstructionPlaceholder" width="1694" height="1334"/>
-        <image name="closeActivity" width="32" height="32"/>
+        <image name="closeActivity" width="50" height="50"/>
         <image name="infoIcon" width="32" height="32"/>
     </resources>
 </document>
