@@ -26,7 +26,7 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IXI-K0-Z04" userLabel="Navigation Header" customClass="RSDNavigationHeaderView" customModule="ResearchUI" customModuleProvider="target">
                     <rect key="frame" x="0.0" y="32" width="375" height="63"/>
                     <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fZz-7R-1np">
+                        <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fZz-7R-1np">
                             <rect key="frame" x="8" y="-9" width="50" height="50"/>
                             <constraints>
                                 <constraint firstAttribute="width" secondItem="fZz-7R-1np" secondAttribute="height" multiplier="1:1" priority="500" id="4q2-pl-Tvc"/>
