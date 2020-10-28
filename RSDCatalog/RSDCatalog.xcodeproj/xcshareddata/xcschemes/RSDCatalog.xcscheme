@@ -88,6 +88,46 @@
                ReferencedContainer = "container:../Research/Research.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "ResearchTests"
+               BuildableName = "ResearchTests"
+               BlueprintName = "ResearchTests"
+               ReferencedContainer = "container:../Research">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "ResearchUITests"
+               BuildableName = "ResearchUITests"
+               BlueprintName = "ResearchUITests"
+               ReferencedContainer = "container:../Research">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "ResearchMotionTests"
+               BuildableName = "ResearchMotionTests"
+               BlueprintName = "ResearchMotionTests"
+               ReferencedContainer = "container:../Research">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "ResearchLocationTests"
+               BuildableName = "ResearchLocationTests"
+               BlueprintName = "ResearchLocationTests"
+               ReferencedContainer = "container:../Research">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction

@@ -3,20 +3,16 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		F82A4AC022960D2500BEBE3C /* ResearchLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F82A4ABF22960D2500BEBE3C /* ResearchLocation.framework */; };
-		F82A4AC122960D2500BEBE3C /* ResearchLocation.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F82A4ABF22960D2500BEBE3C /* ResearchLocation.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F82A4AC322960DD400BEBE3C /* Recorder_Distance.json in Resources */ = {isa = PBXBuildFile; fileRef = F82A4AC222960DD400BEBE3C /* Recorder_Distance.json */; };
 		F836460B2265281400CCA0EF /* TaskPresentationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F836460A2265281400CCA0EF /* TaskPresentationViewController.swift */; };
 		F836460D22652E6100CCA0EF /* TaskArchivesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F836460C22652E6000CCA0EF /* TaskArchivesTableViewController.swift */; };
 		F8373C9320964F60004DD4E1 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = F8373C9220964F60004DD4E1 /* README.md */; };
 		F871AA5122610D2F00C0F657 /* ColorPalettes.json in Resources */ = {isa = PBXBuildFile; fileRef = F871AA5022610D2F00C0F657 /* ColorPalettes.json */; };
 		F871AA5322610E8900C0F657 /* PaletteSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F871AA5222610E8900C0F657 /* PaletteSelectionViewController.swift */; };
-		F891DD32228CFDE2001B2A57 /* ResearchMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F891DD31228CFDE2001B2A57 /* ResearchMotion.framework */; };
-		F891DD33228CFDE2001B2A57 /* ResearchMotion.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F891DD31228CFDE2001B2A57 /* ResearchMotion.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F8D42A532095518400C6A4BC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D42A522095518400C6A4BC /* AppDelegate.swift */; };
 		F8D42A5A2095518400C6A4BC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F8D42A592095518400C6A4BC /* Assets.xcassets */; };
 		F8D42A732095518400C6A4BC /* RSDCatalogUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D42A722095518400C6A4BC /* RSDCatalogUITests.swift */; };
@@ -33,10 +29,6 @@
 		F8D42A9E209552EC00C6A4BC /* Theme_Color.json in Resources */ = {isa = PBXBuildFile; fileRef = F8D42A96209552EC00C6A4BC /* Theme_Color.json */; };
 		F8D42AA0209552EC00C6A4BC /* FormStep_Picker.json in Resources */ = {isa = PBXBuildFile; fileRef = F8D42A98209552EC00C6A4BC /* FormStep_Picker.json */; };
 		F8D42AA1209552EC00C6A4BC /* TaskGroups.json in Resources */ = {isa = PBXBuildFile; fileRef = F8D42A99209552EC00C6A4BC /* TaskGroups.json */; };
-		F8D42AB62095550C00C6A4BC /* Research.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8D42AB52095550C00C6A4BC /* Research.framework */; };
-		F8D42AB82095550C00C6A4BC /* ResearchUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8D42AB72095550C00C6A4BC /* ResearchUI.framework */; };
-		F8D42ABA2095552100C6A4BC /* Research.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F8D42AB52095550C00C6A4BC /* Research.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F8D42ABC2095552100C6A4BC /* ResearchUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F8D42AB72095550C00C6A4BC /* ResearchUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F8D42AC0209555C400C6A4BC /* RSDCatalogTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D42A672095518400C6A4BC /* RSDCatalogTests.swift */; };
 		F8DC072E2256DD8A0045D530 /* ArchiveManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8DC072D2256DD8A0045D530 /* ArchiveManager.swift */; };
 		FF432A1F23A3033F0027288F /* HoldPhone@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FF432A1D23A3033F0027288F /* HoldPhone@2x.png */; };
@@ -54,8 +46,11 @@
 		FF432A3723A303BB0027288F /* topMarginBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FF432A3523A303BA0027288F /* topMarginBackground@2x.png */; };
 		FF432A3823A303BB0027288F /* topMarginBackground@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = FF432A3623A303BB0027288F /* topMarginBackground@3x.png */; };
 		FF4A231925001F9500944009 /* Recorder_Microphone.json in Resources */ = {isa = PBXBuildFile; fileRef = FF4A231825001F9500944009 /* Recorder_Microphone.json */; };
-		FF4A231B2500263600944009 /* ResearchAudioRecorder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF4A231A2500263600944009 /* ResearchAudioRecorder.framework */; };
-		FF4A231C2500263600944009 /* ResearchAudioRecorder.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FF4A231A2500263600944009 /* ResearchAudioRecorder.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		FF54972B254B79C800E0771A /* Research in Frameworks */ = {isa = PBXBuildFile; productRef = FF54972A254B79C800E0771A /* Research */; };
+		FF54972D254B79C800E0771A /* ResearchAudioRecorder in Frameworks */ = {isa = PBXBuildFile; productRef = FF54972C254B79C800E0771A /* ResearchAudioRecorder */; };
+		FF54972F254B79C800E0771A /* ResearchLocation in Frameworks */ = {isa = PBXBuildFile; productRef = FF54972E254B79C800E0771A /* ResearchLocation */; };
+		FF549731254B79C800E0771A /* ResearchMotion in Frameworks */ = {isa = PBXBuildFile; productRef = FF549730254B79C800E0771A /* ResearchMotion */; };
+		FF549733254B79C800E0771A /* ResearchUI in Frameworks */ = {isa = PBXBuildFile; productRef = FF549732254B79C800E0771A /* ResearchUI */; };
 		FF61FA2E23A43ADD006B36C5 /* Silver_Cat_01_Videvo.mov in Resources */ = {isa = PBXBuildFile; fileRef = FF61FA2D23A43ADD006B36C5 /* Silver_Cat_01_Videvo.mov */; };
 		FF8FC21922F3A0AF00FA6DAF /* Theme_Image.json in Resources */ = {isa = PBXBuildFile; fileRef = FF8FC21822F3A0AF00FA6DAF /* Theme_Image.json */; };
 		FFE39AEF249D55B500446A8B /* SimpleSurvey.json in Resources */ = {isa = PBXBuildFile; fileRef = FFE39AEE249D55B500446A8B /* SimpleSurvey.json */; };
@@ -77,24 +72,6 @@
 			remoteInfo = RSDCatalog;
 		};
 /* End PBXContainerItemProxy section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		F8D42ABD2095552100C6A4BC /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				F82A4AC122960D2500BEBE3C /* ResearchLocation.framework in Embed Frameworks */,
-				FF4A231C2500263600944009 /* ResearchAudioRecorder.framework in Embed Frameworks */,
-				F891DD33228CFDE2001B2A57 /* ResearchMotion.framework in Embed Frameworks */,
-				F8D42ABA2095552100C6A4BC /* Research.framework in Embed Frameworks */,
-				F8D42ABC2095552100C6A4BC /* ResearchUI.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		F82A4ABF22960D2500BEBE3C /* ResearchLocation.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ResearchLocation.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -159,11 +136,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F82A4AC022960D2500BEBE3C /* ResearchLocation.framework in Frameworks */,
-				FF4A231B2500263600944009 /* ResearchAudioRecorder.framework in Frameworks */,
-				F891DD32228CFDE2001B2A57 /* ResearchMotion.framework in Frameworks */,
-				F8D42AB62095550C00C6A4BC /* Research.framework in Frameworks */,
-				F8D42AB82095550C00C6A4BC /* ResearchUI.framework in Frameworks */,
+				FF54972D254B79C800E0771A /* ResearchAudioRecorder in Frameworks */,
+				FF549731254B79C800E0771A /* ResearchMotion in Frameworks */,
+				FF549733254B79C800E0771A /* ResearchUI in Frameworks */,
+				FF54972F254B79C800E0771A /* ResearchLocation in Frameworks */,
+				FF54972B254B79C800E0771A /* Research in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -327,13 +304,19 @@
 				F8D42A4B2095518400C6A4BC /* Sources */,
 				F8D42A4C2095518400C6A4BC /* Frameworks */,
 				F8D42A4D2095518400C6A4BC /* Resources */,
-				F8D42ABD2095552100C6A4BC /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			name = RSDCatalog;
+			packageProductDependencies = (
+				FF54972A254B79C800E0771A /* Research */,
+				FF54972C254B79C800E0771A /* ResearchAudioRecorder */,
+				FF54972E254B79C800E0771A /* ResearchLocation */,
+				FF549730254B79C800E0771A /* ResearchMotion */,
+				FF549732254B79C800E0771A /* ResearchUI */,
+			);
 			productName = RSDCatalog;
 			productReference = F8D42A4F2095518400C6A4BC /* RSDCatalog.app */;
 			productType = "com.apple.product-type.application";
@@ -824,6 +807,29 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		FF54972A254B79C800E0771A /* Research */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Research;
+		};
+		FF54972C254B79C800E0771A /* ResearchAudioRecorder */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ResearchAudioRecorder;
+		};
+		FF54972E254B79C800E0771A /* ResearchLocation */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ResearchLocation;
+		};
+		FF549730254B79C800E0771A /* ResearchMotion */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ResearchMotion;
+		};
+		FF549732254B79C800E0771A /* ResearchUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ResearchUI;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = F8D42A472095518300C6A4BC /* Project object */;
 }

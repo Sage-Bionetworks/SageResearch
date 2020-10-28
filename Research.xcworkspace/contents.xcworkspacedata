@@ -2,10 +2,10 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:RSDCatalog/RSDCatalog.xcodeproj">
+      location = "group:Research">
    </FileRef>
    <FileRef
-      location = "group:Research/Research.xcodeproj">
+      location = "group:RSDCatalog/RSDCatalog.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:RK1Translator/../RSDTest/RSDTest.xcodeproj">

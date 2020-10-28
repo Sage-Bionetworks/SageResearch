@@ -11,8 +11,6 @@
 		FFE0BD31244520EE00B941BC /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE0BD30244520EE00B941BC /* ViewController.swift */; };
 		FFE0BD33244520EF00B941BC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FFE0BD32244520EF00B941BC /* Assets.xcassets */; };
 		FFE0BD36244520EF00B941BC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FFE0BD34244520EF00B941BC /* Main.storyboard */; };
-		FFE0BD40244521B400B941BC /* Research.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFE0BD3F244521B400B941BC /* Research.framework */; };
-		FFE0BD41244521B400B941BC /* Research.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FFE0BD3F244521B400B941BC /* Research.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FFE0BD44244522B800B941BC /* DragView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE0BD43244522B800B941BC /* DragView.swift */; };
 /* End PBXBuildFile section */
 
@@ -23,7 +21,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				FFE0BD41244521B400B941BC /* Research.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -38,7 +35,6 @@
 		FFE0BD35244520EF00B941BC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		FFE0BD37244520EF00B941BC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FFE0BD38244520EF00B941BC /* JsonConverter.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = JsonConverter.entitlements; sourceTree = "<group>"; };
-		FFE0BD3F244521B400B941BC /* Research.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Research.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FFE0BD43244522B800B941BC /* DragView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DragView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -47,7 +43,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FFE0BD40244521B400B941BC /* Research.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -88,7 +83,6 @@
 		FFE0BD3E244521B400B941BC /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				FFE0BD3F244521B400B941BC /* Research.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
