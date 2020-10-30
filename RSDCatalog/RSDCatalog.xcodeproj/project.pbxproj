@@ -46,13 +46,13 @@
 		FF432A3723A303BB0027288F /* topMarginBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FF432A3523A303BA0027288F /* topMarginBackground@2x.png */; };
 		FF432A3823A303BB0027288F /* topMarginBackground@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = FF432A3623A303BB0027288F /* topMarginBackground@3x.png */; };
 		FF4A231925001F9500944009 /* Recorder_Microphone.json in Resources */ = {isa = PBXBuildFile; fileRef = FF4A231825001F9500944009 /* Recorder_Microphone.json */; };
-		FF54972B254B79C800E0771A /* Research in Frameworks */ = {isa = PBXBuildFile; productRef = FF54972A254B79C800E0771A /* Research */; };
-		FF54972D254B79C800E0771A /* ResearchAudioRecorder in Frameworks */ = {isa = PBXBuildFile; productRef = FF54972C254B79C800E0771A /* ResearchAudioRecorder */; };
-		FF54972F254B79C800E0771A /* ResearchLocation in Frameworks */ = {isa = PBXBuildFile; productRef = FF54972E254B79C800E0771A /* ResearchLocation */; };
-		FF549731254B79C800E0771A /* ResearchMotion in Frameworks */ = {isa = PBXBuildFile; productRef = FF549730254B79C800E0771A /* ResearchMotion */; };
-		FF549733254B79C800E0771A /* ResearchUI in Frameworks */ = {isa = PBXBuildFile; productRef = FF549732254B79C800E0771A /* ResearchUI */; };
 		FF61FA2E23A43ADD006B36C5 /* Silver_Cat_01_Videvo.mov in Resources */ = {isa = PBXBuildFile; fileRef = FF61FA2D23A43ADD006B36C5 /* Silver_Cat_01_Videvo.mov */; };
 		FF8FC21922F3A0AF00FA6DAF /* Theme_Image.json in Resources */ = {isa = PBXBuildFile; fileRef = FF8FC21822F3A0AF00FA6DAF /* Theme_Image.json */; };
+		FFDEE0E7254C9A82002BC461 /* Research in Frameworks */ = {isa = PBXBuildFile; productRef = FFDEE0E6254C9A82002BC461 /* Research */; };
+		FFDEE0E9254C9A82002BC461 /* ResearchAudioRecorder in Frameworks */ = {isa = PBXBuildFile; productRef = FFDEE0E8254C9A82002BC461 /* ResearchAudioRecorder */; };
+		FFDEE0EB254C9A82002BC461 /* ResearchLocation in Frameworks */ = {isa = PBXBuildFile; productRef = FFDEE0EA254C9A82002BC461 /* ResearchLocation */; };
+		FFDEE0ED254C9A82002BC461 /* ResearchMotion in Frameworks */ = {isa = PBXBuildFile; productRef = FFDEE0EC254C9A82002BC461 /* ResearchMotion */; };
+		FFDEE0EF254C9A82002BC461 /* ResearchUI in Frameworks */ = {isa = PBXBuildFile; productRef = FFDEE0EE254C9A82002BC461 /* ResearchUI */; };
 		FFE39AEF249D55B500446A8B /* SimpleSurvey.json in Resources */ = {isa = PBXBuildFile; fileRef = FFE39AEE249D55B500446A8B /* SimpleSurvey.json */; };
 /* End PBXBuildFile section */
 
@@ -136,11 +136,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FF54972D254B79C800E0771A /* ResearchAudioRecorder in Frameworks */,
-				FF549731254B79C800E0771A /* ResearchMotion in Frameworks */,
-				FF549733254B79C800E0771A /* ResearchUI in Frameworks */,
-				FF54972F254B79C800E0771A /* ResearchLocation in Frameworks */,
-				FF54972B254B79C800E0771A /* Research in Frameworks */,
+				FFDEE0E9254C9A82002BC461 /* ResearchAudioRecorder in Frameworks */,
+				FFDEE0ED254C9A82002BC461 /* ResearchMotion in Frameworks */,
+				FFDEE0EF254C9A82002BC461 /* ResearchUI in Frameworks */,
+				FFDEE0EB254C9A82002BC461 /* ResearchLocation in Frameworks */,
+				FFDEE0E7254C9A82002BC461 /* Research in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -311,11 +311,11 @@
 			);
 			name = RSDCatalog;
 			packageProductDependencies = (
-				FF54972A254B79C800E0771A /* Research */,
-				FF54972C254B79C800E0771A /* ResearchAudioRecorder */,
-				FF54972E254B79C800E0771A /* ResearchLocation */,
-				FF549730254B79C800E0771A /* ResearchMotion */,
-				FF549732254B79C800E0771A /* ResearchUI */,
+				FFDEE0E6254C9A82002BC461 /* Research */,
+				FFDEE0E8254C9A82002BC461 /* ResearchAudioRecorder */,
+				FFDEE0EA254C9A82002BC461 /* ResearchLocation */,
+				FFDEE0EC254C9A82002BC461 /* ResearchMotion */,
+				FFDEE0EE254C9A82002BC461 /* ResearchUI */,
 			);
 			productName = RSDCatalog;
 			productReference = F8D42A4F2095518400C6A4BC /* RSDCatalog.app */;
@@ -809,23 +809,23 @@
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		FF54972A254B79C800E0771A /* Research */ = {
+		FFDEE0E6254C9A82002BC461 /* Research */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Research;
 		};
-		FF54972C254B79C800E0771A /* ResearchAudioRecorder */ = {
+		FFDEE0E8254C9A82002BC461 /* ResearchAudioRecorder */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = ResearchAudioRecorder;
 		};
-		FF54972E254B79C800E0771A /* ResearchLocation */ = {
+		FFDEE0EA254C9A82002BC461 /* ResearchLocation */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = ResearchLocation;
 		};
-		FF549730254B79C800E0771A /* ResearchMotion */ = {
+		FFDEE0EC254C9A82002BC461 /* ResearchMotion */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = ResearchMotion;
 		};
-		FF549732254B79C800E0771A /* ResearchUI */ = {
+		FFDEE0EE254C9A82002BC461 /* ResearchUI */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = ResearchUI;
 		};
