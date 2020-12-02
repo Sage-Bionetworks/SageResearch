@@ -422,13 +422,11 @@
 		FFF4FC622550B36A006F6EA2 /* RSDFractionFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = F8586AE42011697700B2DF65 /* RSDFractionFormatter.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FFF4FC8A2550B378006F6EA2 /* Formatters.h in Headers */ = {isa = PBXBuildFile; fileRef = FF9D241F2550A9B60051F2F0 /* Formatters.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FFF4FCA52550B394006F6EA2 /* Formatters.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFF4FBFF2550B322006F6EA2 /* Formatters.framework */; };
-		FFF4FCA62550B394006F6EA2 /* Formatters.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FFF4FBFF2550B322006F6EA2 /* Formatters.framework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		FFF4FCF22550B533006F6EA2 /* FormatterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFF4FCF12550B533006F6EA2 /* FormatterTests.swift */; };
 		FFF4FD282550B7D3006F6EA2 /* ExceptionHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = FFF4FD262550B7D3006F6EA2 /* ExceptionHandler.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FFF4FD382550B7FE006F6EA2 /* RSDExceptionHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = FFF159DF1FB4D7A60061BA93 /* RSDExceptionHandler.m */; };
 		FFF4FD512550B815006F6EA2 /* RSDExceptionHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = FFF159DE1FB4D7A60061BA93 /* RSDExceptionHandler.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FFF4FD762550B834006F6EA2 /* ExceptionHandler.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFF4FD242550B7D3006F6EA2 /* ExceptionHandler.framework */; };
-		FFF4FD772550B834006F6EA2 /* ExceptionHandler.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FFF4FD242550B7D3006F6EA2 /* ExceptionHandler.framework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		FFFBD75622CBE9BE004613FC /* RSDActiveStepViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FFFBD75522CBE9BE004613FC /* RSDActiveStepViewController.xib */; };
 		FFFBE9DE23AD6A8800650F11 /* Research.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF8B53141FCE678E006B6937 /* Research.framework */; platformFilter = ios; };
 		FFFBE9E123AD6A9700650F11 /* Research.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF8B53141FCE678E006B6937 /* Research.framework */; };
@@ -518,18 +516,6 @@
 			dstSubfolderSpec = 10;
 			files = (
 				FF9296972555274B00C2B93F /* NSLocaleSwizzle.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		FFF4FCA92550B394006F6EA2 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				FFF4FCA62550B394006F6EA2 /* Formatters.framework in Embed Frameworks */,
-				FFF4FD772550B834006F6EA2 /* ExceptionHandler.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2518,7 +2504,6 @@
 				FF8B53101FCE678E006B6937 /* Frameworks */,
 				FF8B53111FCE678E006B6937 /* Headers */,
 				FF8B53121FCE678E006B6937 /* Resources */,
-				FFF4FCA92550B394006F6EA2 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
