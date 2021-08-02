@@ -43,19 +43,19 @@ open class RSDInstructionStepViewController: RSDPermissionStepViewController {
     }
     
     /// Scrollview for the image and instruction text.
-    @IBOutlet var scrollView: UIScrollView?
+    @IBOutlet public var scrollView: UIScrollView?
     
     /// The constraint that sets the scroll bar's top background view's height.
-    @IBOutlet var imageBackgroundTopConstraint: NSLayoutConstraint?
+    @IBOutlet public var imageBackgroundTopConstraint: NSLayoutConstraint?
     
     /// The constraint that sets the image height. This needs to be adjusted for smaller screens.
-    @IBOutlet var headerHeightConstraint: NSLayoutConstraint?
+    @IBOutlet public var headerHeightConstraint: NSLayoutConstraint?
     
     /// The constraint between the learn more button and the bottom of the view.
-    @IBOutlet var learnMoreBottomConstraint: NSLayoutConstraint?
+    @IBOutlet public var learnMoreBottomConstraint: NSLayoutConstraint?
     
     /// A view that is used to mark the height of the text instruction area.
-    @IBOutlet var instructionTextView: UIView?
+    @IBOutlet public var instructionTextView: UIView?
     
     /// The image leading constraint can be used to set up the image to use different constraints for
     /// the `iconBefore` image placement type.
