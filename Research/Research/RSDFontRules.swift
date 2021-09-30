@@ -197,6 +197,8 @@ open class RSDFontRules  {
             return font(ofSize: 16)
         case .microDetail:
             return font(ofSize: 14)
+        case .superMicroDetail:
+            return font(ofSize: 12)
             
         // Version 1
         case .heading1:

@@ -107,6 +107,7 @@ open class RSDDesignSystem {
         public static let hint: TextType = "hint"    // placeholder
         public static let microHeader: TextType = "microHeader"
         public static let microDetail: TextType = "microDetail"
+        public static let superMicroDetail: TextType = "superMicroDetail"
         
         // Version 1
         @available(*, deprecated, message: "Use `xLargeHeader`")
