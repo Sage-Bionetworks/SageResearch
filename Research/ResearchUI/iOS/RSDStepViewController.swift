@@ -128,6 +128,10 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
     
     // MARK: View appearance handling
     
+    open override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        RSDAppDelegate.appLock.map { $0.orientationLock ?? $0.defaultOrientationLock } ?? .portrait
+    }
+    
     /// Track whether or not the view is visible. The value of this flag is set to `true` in
     /// `viewDidAppear` before anything else is done. It is set to `false` in `viewWillDisappear`
     /// before anything else is done.

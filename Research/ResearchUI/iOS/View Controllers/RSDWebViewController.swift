@@ -62,6 +62,10 @@ open class RSDWebViewController: UIViewController, WKNavigationDelegate {
     private var _usesBackButton: Bool = false
     private var _webviewLoaded = false
     
+    open override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        .portrait
+    }
+    
     /// Convenience method for instantiating a web view controller that is the root view controller for a
     /// navigation controller.
     open class func instantiateController(using designSystem: RSDDesignSystem = RSDDesignSystem(), action: RSDWebViewUIAction? = nil) -> (RSDWebViewController, UINavigationController) {

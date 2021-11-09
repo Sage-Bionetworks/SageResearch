@@ -50,6 +50,10 @@ open class RSDNavigationController : UINavigationController, RSDStepController {
         return (self.children.first as! (UIViewController & RSDStepController))
     }
     
+    open override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        rootStepViewController.supportedInterfaceOrientations
+    }
+    
     /// get/set `rootStepViewController.step`
     public var stepViewModel: RSDStepViewPathComponent! {
         get {

@@ -653,6 +653,18 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
     
     
     // MARK: View management
+        
+    open override var prefersStatusBarHidden: Bool {
+        self.currentStepViewController?.prefersStatusBarHidden ?? false
+    }
+    
+    open override var preferredStatusBarStyle: UIStatusBarStyle {
+        self.currentStepViewController?.preferredStatusBarStyle ?? .default
+    }
+    
+    open override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        RSDAppDelegate.appLock.map { $0.orientationLock ?? $0.defaultOrientationLock } ?? .portrait
+    }
     
     private var _statusBarVC: UIViewController?
     open override var childForStatusBarStyle: UIViewController? {
