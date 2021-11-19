@@ -10,7 +10,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="RSDActiveStepViewController" customModule="ResearchUI" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="RSDActiveStepViewController" customModule="ResearchV2UI" customModuleProvider="target">
             <connections>
                 <outlet property="countdownDial" destination="Nsq-2O-uCa" id="ARL-Ie-fPr"/>
                 <outlet property="countdownLabel" destination="O9c-u0-eMy" id="JT5-UC-MBo"/>
@@ -23,7 +23,7 @@
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view contentMode="scaleToFill" id="Nxx-tp-UTx" customClass="RSDStepHeaderView" customModule="ResearchUI">
+        <view contentMode="scaleToFill" id="Nxx-tp-UTx" customClass="RSDStepHeaderView" customModule="ResearchV2UI">
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
@@ -31,7 +31,7 @@
                     <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </imageView>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Nsq-2O-uCa" customClass="RSDCountdownDial" customModule="ResearchUI">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Nsq-2O-uCa" customClass="RSDCountdownDial" customModule="ResearchV2UI">
                     <rect key="frame" x="77" y="288" width="260" height="260"/>
                     <subviews>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="vHx-cU-DB7">
@@ -97,25 +97,25 @@
                     <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <state key="normal" image="closeActivity"/>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1ou-tc-eAw" userLabel="Restart Button" customClass="RSDRoundedButton" customModule="ResearchUI">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1ou-tc-eAw" userLabel="Restart Button" customClass="RSDRoundedButton" customModule="ResearchV2UI">
                     <rect key="frame" x="28" y="742" width="358" height="30"/>
                     <state key="normal" title="Restart Test"/>
                     <userDefinedRuntimeAttributes>
                         <userDefinedRuntimeAttribute type="boolean" keyPath="isSecondaryButton" value="YES"/>
                     </userDefinedRuntimeAttributes>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XHx-Hp-YbK" userLabel="Review Button" customClass="RSDUnderlinedButton" customModule="ResearchUI">
+                <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XHx-Hp-YbK" userLabel="Review Button" customClass="RSDUnderlinedButton" customModule="ResearchV2UI">
                     <rect key="frame" x="140" y="802" width="134" height="30"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <state key="normal" title="Review Instructions"/>
                 </button>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="trI-0q-jgS" customClass="RSDStatusBarBackgroundView" customModule="ResearchUI">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="trI-0q-jgS" customClass="RSDStatusBarBackgroundView" customModule="ResearchV2UI">
                     <rect key="frame" x="0.0" y="44" width="414" height="0.0"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <viewLayoutGuide key="safeArea" id="T3z-p0-lo4"/>
                 </view>
-                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="X2x-5p-IkJ" userLabel="Next Button" customClass="RSDRoundedButton" customModule="ResearchUI">
+                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="X2x-5p-IkJ" userLabel="Next Button" customClass="RSDRoundedButton" customModule="ResearchV2UI">
                     <rect key="frame" x="28" y="798" width="358" height="30"/>
                     <state key="normal" title="Next"/>
                     <userDefinedRuntimeAttributes>
