@@ -32,7 +32,7 @@
 //
 
 import XCTest
-@testable import Research
+@testable import ResearchV2
 @testable import Research_UnitTest
 
 class TaskControllerTests: XCTestCase {

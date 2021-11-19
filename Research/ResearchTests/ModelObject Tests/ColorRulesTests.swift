@@ -32,7 +32,7 @@
 //
 
 import XCTest
-@testable import Research
+@testable import ResearchV2
 
 
 // - note: syoung 04/12/2019 The purpose of the tests included in this file is to check that as the rules

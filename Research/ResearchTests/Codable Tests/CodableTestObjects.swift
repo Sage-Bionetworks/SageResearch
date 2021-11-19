@@ -32,7 +32,7 @@
 //
 
 import XCTest
-import Research
+import ResearchV2
 
 class BundleWrapper {
     class var bundleIdentifier: String? {

@@ -1,6 +1,6 @@
 //
-//  ResearchUI.h
-//  ResearchUI
+//  Research.h
+//  Research
 //
 //  Copyright © 2017 Sage Bionetworks. All rights reserved.
 //
@@ -31,11 +31,18 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-@import UIKit;
-@import Research;
+#import <Foundation/Foundation.h>
 
-//! Project version number for ResearchUI.
-FOUNDATION_EXPORT double ResearchUIVersionNumber;
+//! Project version number for Research.
+FOUNDATION_EXPORT double ResearchVersionNumber;
 
-//! Project version string for ResearchUI.
-FOUNDATION_EXPORT const unsigned char ResearchUIVersionString[];
+//! Project version string for Research.
+FOUNDATION_EXPORT const unsigned char ResearchVersionString[];
+
+#import "RSDExceptionHandler.h"
+#import "NSUnit+RSDUnitConversion.h"
+#import "RSDDurationFormatter.h"
+#import "RSDFractionFormatter.h"
+#import "RSDLengthFormatter.h"
+#import "RSDMassFormatter.h"
+

@@ -34,7 +34,7 @@
 import Foundation
 
 import XCTest
-import Research
+import ResearchV2
 
 class SurveyRuleTests: XCTestCase {
     

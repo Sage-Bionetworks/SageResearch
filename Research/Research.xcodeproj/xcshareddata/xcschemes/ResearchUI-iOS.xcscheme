@@ -15,8 +15,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "F870619F227390110056F70E"
-               BuildableName = "ResearchUI.framework"
-               BlueprintName = "ResearchUI (iOS)"
+               BuildableName = "ResearchV2UI.framework"
+               BlueprintName = "ResearchV2UI"
                ReferencedContainer = "container:Research.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -29,8 +29,6 @@
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
       </Testables>
-      <AdditionalOptions>
-      </AdditionalOptions>
    </TestAction>
    <LaunchAction
       buildConfiguration = "Debug"
@@ -46,13 +44,11 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "F870619F227390110056F70E"
-            BuildableName = "ResearchUI.framework"
-            BlueprintName = "ResearchUI (iOS)"
+            BuildableName = "ResearchV2UI.framework"
+            BlueprintName = "ResearchV2UI"
             ReferencedContainer = "container:Research.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
-      <AdditionalOptions>
-      </AdditionalOptions>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
@@ -64,8 +60,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "F870619F227390110056F70E"
-            BuildableName = "ResearchUI.framework"
-            BlueprintName = "ResearchUI (iOS)"
+            BuildableName = "ResearchV2UI.framework"
+            BlueprintName = "ResearchV2UI"
             ReferencedContainer = "container:Research.xcodeproj">
          </BuildableReference>
       </MacroExpansion>

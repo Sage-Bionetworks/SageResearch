@@ -34,7 +34,7 @@
 
 import XCTest
 
-@testable import Research
+@testable import ResearchV2
 
 class MeasurementDurationTests: XCTestCase {
     

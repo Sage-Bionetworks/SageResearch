@@ -32,7 +32,7 @@
 //
 
 @import UIKit;
-@import Research;
+@import ResearchV2;
 
 //! Project version number for ResearchLocation.
 FOUNDATION_EXPORT double ResearchLocationVersionNumber;
