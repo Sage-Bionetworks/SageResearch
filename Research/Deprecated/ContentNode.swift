@@ -1,5 +1,5 @@
 //
-//  ResultNodeSerializer.swift
+//  ContentNode.swift
 //  Research
 //
 //  Copyright © 2020 Sage Bionetworks. All rights reserved.
@@ -31,44 +31,35 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-import Foundation
 import JsonModel
+import Foundation
+import AssessmentModel
 
-public final class ResultNodeSerializer : IdentifiableInterfaceSerializer, PolymorphicSerializer {
-    public var documentDescription: String? {
-        """
-        `ResultNode` is an interface used to allow for a related grouping of questions.
-        """.replacingOccurrences(of: "\n", with: " ").replacingOccurrences(of: "  ", with: "\n")
+public protocol ResultNode : ContentNode {
+    func instantiateResult() -> ResultData
+}
+
+public protocol FormStep : ResultNode, RSDUIStep {
+    
+    /// A list of the child result nodes. Typically, these will be a collection of `Question`
+    /// objects but that is not required.
+    var children: [ResultNode] { get }
+}
+
+public extension FormStep {
+    
+    /// A form step instantiates a step result.
+    func instantiateResult() -> ResultData {
+        instantiateStepResult()
     }
     
-    public var jsonSchema: URL {
-        URL(string: "\(RSDFactory.shared.modelName(for: self.interfaceName)).json", relativeTo: kSageJsonSchemaBaseURL)!
-    }
-    
-    override init() {
-        let examples: [SerializableResultNode] = [
-            ChoiceQuestionStepObject.serializationExample(),
-            MultipleInputQuestionStepObject.serializationExample(),
-            SimpleQuestionStepObject.serializationExample(),
-            StringChoiceQuestionStepObject.serializationExample(),
-        ]
-        self.examples = examples
-    }
-    
-    public private(set) var examples: [ResultNode]
-    
-    public func add(_ example: SerializableResultNode) {
-        if let idx = examples.firstIndex(where: {
-            ($0 as! PolymorphicRepresentable).typeName == example.typeName }) {
-            examples.remove(at: idx)
+    /// Check to see if the step result is a collection result and return that if valid.
+    func instantiateCollectionResult() -> CollectionResult {
+        guard let result = instantiateStepResult() as? CollectionResult else {
+            debugPrint("WARNING!!! The instantiated step result does not conform to `CollectionResult`.")
+            return CollectionResultObject(identifier: self.identifier)
         }
-        examples.append(example)
+        return result
     }
 }
 
-public protocol SerializableResultNode : ResultNode, PolymorphicRepresentable {
-}
-
-extension ChoiceQuestionStepObject : SerializableResultNode {}
-extension MultipleInputQuestionStepObject : SerializableResultNode {}
-extension SimpleQuestionStepObject : SerializableResultNode {}

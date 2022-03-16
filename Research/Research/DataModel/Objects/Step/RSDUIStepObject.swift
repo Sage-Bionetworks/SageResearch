@@ -34,6 +34,7 @@
 import Foundation
 import JsonModel
 import MobilePassiveData
+import AssessmentModel
 
 extension RSDStepType {
     fileprivate static let nullStepType: RSDStepType = "null"
@@ -117,6 +118,10 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDDesignableUIStep, RSDT
     /// The image theme.
     open var imageTheme: RSDImageThemeElement?
     
+    public var imageInfo: ImageInfo? {
+        self.imageTheme
+    }
+    
     /// The next step to jump to. This is used where direct navigation is required. For example, to allow the
     /// task to display information or a question on an alternate path and then exit the task. In that case,
     /// the main branch of navigation will need to "jump" over the alternate path step and the alternate path
@@ -125,7 +130,7 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDDesignableUIStep, RSDT
     /// This step is not intended for "optional" navigation where the result might change the intended
     /// navigation. For the case where a user action might result in a different navigation path, you can
     /// have the step controller set the step result to a result that implements `RSDNavigationResult` and
-    /// then set the `skipToIdentifier` on that result. `RSDResultObject` and `RSDCollectionResultObject`
+    /// then set the `skipToIdentifier` on that result. `ResultObject` and `CollectionResultObject`
     /// both implement this protocol. The reason for doing this is that each time a step is visited in a
     /// a navigation path, the **result** of that step is replaced with an immutable result and will **not**
     /// use the previous result navigation unless specifically set by the step controller.
@@ -223,10 +228,14 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDDesignableUIStep, RSDT
 
     // MARK: Result management
     
-    /// Instantiate a step result that is appropriate for this step. Default implementation will return a `RSDResultObject`.
+    /// Instantiate a step result that is appropriate for this step. Default implementation will return a `ResultObject`.
     /// - returns: A result for this step.
     open func instantiateStepResult() -> ResultData {
-        return RSDResultObject(identifier: identifier)
+        return ResultObject(identifier: identifier)
+    }
+    
+    public final func instantiateResult() -> ResultData {
+        instantiateStepResult()
     }
     
     // MARK: validation
@@ -264,8 +273,8 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDDesignableUIStep, RSDT
     
     /// Initialize from a `Decoder`.
     ///
-    /// - note: The `imageTheme` can be decoded as a `RSDFetchableImageThemeElementObject` or
-    ///         `RSDAnimatedImageThemeElementObject`, depending upon the included dictionary.
+    /// - note: The `imageTheme` can be decoded as a `FetchableImage` or
+    ///         `AnimatedImage`, depending upon the included dictionary.
     ///
     /// - example:
     ///
@@ -379,7 +388,7 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDDesignableUIStep, RSDT
         }
         if container.contains(.image) {
             let nestedDecoder = try container.superDecoder(forKey: .image)
-            self.imageTheme = try decoder.factory.decodePolymorphicObject(RSDImageThemeElement.self, from: nestedDecoder)
+            self.imageTheme = try decoder.factory.decodePolymorphicObject(ImageInfo.self, from: nestedDecoder) as? RSDImageThemeElement
         }
         
         if deviceType == nil {
@@ -476,7 +485,7 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDDesignableUIStep, RSDT
         case .colorMapping:
             return .init(propertyType: .interface("\(RSDColorMappingThemeElement.self)"))
         case .image:
-            return .init(propertyType: .interface("\(RSDImageThemeElement.self)"))
+            return .init(propertyType: .interface("\(ImageInfo.self)"))
         case .beforeCohortRules, .afterCohortRules:
             return .init(propertyType: .referenceArray(RSDCohortNavigationRuleObject.documentableType()))
         }

@@ -39,6 +39,7 @@ import UIKit
 import JsonModel
 import Research
 import MobilePassiveData
+import AssessmentModel
 
 /// `RSDStepViewController` is the default base class implementation for the steps presented using this
 /// UI architecture.
@@ -524,22 +525,22 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
             // Otherwise, look at the action and show the default based on the type
             switch actionType {
             case .navigation(.cancel):
-                return RSDUIActionObject(iconName: "closeActivity", bundle: Bundle.module)
+                return ButtonActionInfoObject(iconName: "closeActivity", bundle: Bundle.module)
             case .navigation(.goForward):
                 if self.step is RSDTaskInfoStep {
-                    return RSDUIActionObject(buttonTitle: Localization.buttonGetStarted())
+                    return ButtonActionInfoObject(buttonTitle: Localization.buttonGetStarted())
                 } else if (self.stepViewModel.parentTaskPath?.hasStepAfter ?? false ){
-                    return RSDUIActionObject(buttonTitle: Localization.buttonNext())
+                    return ButtonActionInfoObject(buttonTitle: Localization.buttonNext())
                 } else {
-                    return RSDUIActionObject(buttonTitle: Localization.buttonDone())
+                    return ButtonActionInfoObject(buttonTitle: Localization.buttonDone())
                 }                
             case .navigation(.goBackward):
-                return RSDUIActionObject(buttonTitle: Localization.buttonBack())
+                return ButtonActionInfoObject(buttonTitle: Localization.buttonBack())
             case .navigation(.skip):
                 if self.step is RSDTaskInfoStep {
-                    return RSDUIActionObject(buttonTitle: Localization.buttonSkipTask())
+                    return ButtonActionInfoObject(buttonTitle: Localization.buttonSkipTask())
                 } else {
-                    return RSDUIActionObject(buttonTitle: Localization.buttonSkip())
+                    return ButtonActionInfoObject(buttonTitle: Localization.buttonSkip())
                 }
                 
             default:
@@ -803,10 +804,8 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
             navigationResult = navResult
         }
         else {
-            // Otherwise, replace the result with a collection result.
-            var collectionResult = RSDCollectionResultObject(identifier: self.step.identifier)
-            collectionResult.appendInputResults(with: previousResult)
-            navigationResult = collectionResult
+            // Otherwise, replace the result with a navigation result.
+            navigationResult = RSDNavigationResultObject(result: previousResult, skipToIdentifier: skipToIdentifier)
         }
         navigationResult.skipToIdentifier = skipToIdentifier
         self.stepViewModel!.taskResult.appendStepHistory(with: navigationResult)
@@ -948,7 +947,7 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
         stop()
     }
     
-    /// Play a sound. The default method will use the shared instance of `RSDAudioSoundPlayer`.
+    /// Play a sound. The default method will use the shared instance of `AudioFileSoundPlayer`.
     /// - parameter sound: The sound to play.
     open func playSound(_ sound: SoundFile = .short_low_high) {
         soundPlayer.playSound(sound)

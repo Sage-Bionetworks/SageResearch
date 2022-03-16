@@ -33,6 +33,7 @@
 
 import XCTest
 import JsonModel
+import AssessmentModel
 @testable import Research
 
 class AnswerResultTypeJSONTests: XCTestCase {

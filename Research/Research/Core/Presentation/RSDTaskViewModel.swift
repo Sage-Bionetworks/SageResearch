@@ -34,6 +34,7 @@
 import JsonModel
 import Foundation
 import MobilePassiveData
+import AssessmentModel
 
 /// The TaskViewModel is a base class implementation of the presentation layer for managing a task. It uses
 /// the [Model–view–viewmodel (MVVM)](https://en.wikipedia.org/wiki/Model-view-viewmodel) design pattern to
@@ -126,11 +127,10 @@ open class RSDTaskViewModel : RSDTaskState, RSDTaskPathComponent {
         guard let parent = parentPath else { return }
         self.dataManager = (parent as? RSDHistoryPathComponent)?.dataManager
         self.previousResults = (parent.taskResult.stepHistory.last(where: { $0.identifier == identifier }) as? RSDTaskResult)?.stepHistory
-        var runResult = self.taskResult as? AssessmentResult
-        if let uuid = (parent.taskResult as? AssessmentResult)?.taskRunUUID {
-            runResult?.taskRunUUID = uuid
+        if let runResult = self.taskResult as? AssessmentResult,
+            let uuid = (parent.taskResult as? AssessmentResult)?.taskRunUUID {
+            runResult.taskRunUUID = uuid
         }
-        self.taskResult = runResult ?? self.taskResult
         if let _ = self.task as? RSDSectionStep {
             self.shouldShowAbbreviatedInstructions = (parentPath as? RSDTaskViewModel)?.shouldShowAbbreviatedInstructions
         }
@@ -484,17 +484,17 @@ open class RSDTaskViewModel : RSDTaskState, RSDTaskPathComponent {
             if task != nil {
                 strongSelf.task = task
                 let previousResult = strongSelf.taskResult
-                var newResult = task!.instantiateTaskResult()
+                let newResult = task!.instantiateTaskResult()
                 if previousResult.asyncResults?.count ?? 0 > 0 {
                     var results = newResult.asyncResults ?? []
                     results.append(contentsOf: previousResult.asyncResults!)
                     newResult.asyncResults = results
                 }
-                var runResult = newResult as? AssessmentResult
-                if let uuid = (previousResult as? AssessmentResult)?.taskRunUUID {
-                    runResult?.taskRunUUID = uuid
+                if let runResult = newResult as? AssessmentResult,
+                    let uuid = (previousResult as? AssessmentResult)?.taskRunUUID {
+                    runResult.taskRunUUID = uuid
                 }
-                strongSelf.taskResult = runResult ?? newResult
+                strongSelf.taskResult = newResult
             }
             else {
                 err = error ?? RSDValidationError.unexpectedNullObject("Fetched a nil task without an associated error")
@@ -841,7 +841,7 @@ extension RSDTaskViewModel {
         // Look to see if the last step has a navigation on it that could return the participant
         // back into the task.
         if let actionHandler = (nextStep as? RSDUIActionHandler) ?? (self.task as? RSDUIActionHandler),
-            let _ = actionHandler.action(for: .navigation(.skip), on: nextStep) as? RSDNavigationUIAction {
+             let _ = actionHandler.action(for: .navigation(.skip), on: nextStep) as? RSDNavigationUIAction {
             return false
         }
         

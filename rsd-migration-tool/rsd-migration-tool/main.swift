@@ -69,8 +69,10 @@ func run() {
 
 enum Library : String, CaseIterable {
     case jsonModel = "JsonModel"
+    case assessmentModel = "AssessmentModel"
     case mobilePassiveData = "MobilePassiveData"
     case motionSensor = "MotionSensor"
+    case research = "Research"
 }
 
 struct Keyword {
@@ -130,15 +132,30 @@ let importLines = [
     "import Foundation",
     "import UIKit",
     "import XCTest",
+    "import JsonModel",
+    "import AssessmentModel",
+    "import MobilePassiveData",
     "import Research",
     "import ResearchUI",
 ]
 let keywords = [
-    Keyword(library: .jsonModel, find: "AnswerResult", replace: nil),
-    Keyword(library: .jsonModel, find: "AnswerType", replace: nil),
-    Keyword(library: .jsonModel, find: "AnswerFinder", replace: nil),
-    Keyword(library: .jsonModel, find: "CollectionResult", replace: nil),
-    Keyword(library: .jsonModel, find: "inputResults", replace: "children"),
+    Keyword(library: .assessmentModel, find: "ResultData", replace: nil),
+    Keyword(library: .assessmentModel, find: "AnswerResult", replace: nil),
+    Keyword(library: .assessmentModel, find: "AnswerType", replace: nil),
+    Keyword(library: .assessmentModel, find: "AnswerFinder", replace: nil),
+    Keyword(library: .assessmentModel, find: "CollectionResult", replace: nil),
+    Keyword(library: .assessmentModel, find: "PlatformContextInfo", replace: nil),
+    Keyword(library: .assessmentModel, find: "AssessmentResult", replace: nil),
+    Keyword(library: .assessmentModel, find: "FileResult", replace: nil),
+    Keyword(library: .assessmentModel, find: "ErrorResult", replace: nil),
+    
+    Keyword(library: .assessmentModel, find: "RSDCollectionResultObject", replace: "CollectionResultObject"),
+    Keyword(library: .assessmentModel, find: "RSDResultObject", replace: "ResultObject"),
+    Keyword(library: .assessmentModel, find: "TextInputValidator", replace: "TextEntryValidator"),
+    Keyword(library: .assessmentModel, find: "RSDSize", replace: "ImageSize"),
+    Keyword(library: .assessmentModel, find: "RSDCopyWithIdentifier", replace: "CopyWithIdentifier"),
+    Keyword(library: .assessmentModel, find: "RSDFetchableImageThemeElementObject", replace: "FetchableImage"),
+    Keyword(library: .assessmentModel, find: "RSDAnimatedImageThemeElementObject", replace: "AnimatedImage"),
     
     Keyword(library: .mobilePassiveData, find: "RSDAsyncActionType", replace: "AsyncActionType"),
     Keyword(library: .mobilePassiveData, find: "RSDMotionRecorderConfiguration", replace: "MotionRecorderConfigurationObject"),
@@ -175,16 +192,16 @@ let keywords = [
 ]
 
 let classChanges = [
-    ClassNameChange(library: .jsonModel, originalTypeName: "RSDResult", replacementTypeName: "ResultData"),
-    ClassNameChange(library: .jsonModel, originalTypeName: "RSDFileResult", replacementTypeName: "FileResult"),
-    ClassNameChange(library: .jsonModel, originalTypeName: "RSDFileResultObject", replacementTypeName: "FileResultObject"),
-    ClassNameChange(library: .jsonModel, originalTypeName: "RSDErrorResult", replacementTypeName: "RSDErrorResult"),
-    ClassNameChange(library: .jsonModel, originalTypeName: "RSDErrorResultObject", replacementTypeName: "RSDErrorResultObject"),
+    ClassNameChange(library: .assessmentModel, originalTypeName: "RSDResult", replacementTypeName: "ResultData"),
+    ClassNameChange(library: .assessmentModel, originalTypeName: "RSDFileResult", replacementTypeName: "FileResult"),
+    ClassNameChange(library: .assessmentModel, originalTypeName: "RSDFileResultObject", replacementTypeName: "FileResultObject"),
+    ClassNameChange(library: .assessmentModel, originalTypeName: "RSDErrorResult", replacementTypeName: "RSDErrorResult"),
+    ClassNameChange(library: .assessmentModel, originalTypeName: "RSDErrorResultObject", replacementTypeName: "RSDErrorResultObject"),
 ]
 
 let varChanges = [
-    VariableNameChange(library: .jsonModel, originalTypeName: "RSDResultType", replacementTypeName: "SerializableResultType", originalVarName: "type", replacementVarName: "serializableType"),
-    VariableNameChange(library: .jsonModel, originalTypeName: "[RSDResult]", replacementTypeName: "[ResultData]", originalVarName: "inputResults", replacementVarName: "children")
+    VariableNameChange(library: .assessmentModel, originalTypeName: "RSDResultType", replacementTypeName: "SerializableResultType", originalVarName: "type", replacementVarName: "serializableType"),
+    VariableNameChange(library: .assessmentModel, originalTypeName: "[RSDResult]", replacementTypeName: "[ResultData]", originalVarName: "inputResults", replacementVarName: "children")
 ]
 
 

@@ -33,6 +33,7 @@
 
 import Foundation
 import JsonModel
+import AssessmentModel
 
 /// `RSDDateCoderObject` provides a concrete implementation of a `RSDDateCoder`. The date coder is used by
 /// the `RSDDateRangeObject` to encode and decode the `minDate` and `maxDate` properties as well as to get

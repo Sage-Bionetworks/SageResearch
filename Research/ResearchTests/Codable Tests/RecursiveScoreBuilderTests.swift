@@ -33,6 +33,7 @@
 
 import XCTest
 import JsonModel
+import AssessmentModel
 @testable import Research
 
 class RecursiveScoreBuilderTests: XCTestCase {
@@ -55,28 +56,28 @@ class RecursiveScoreBuilderTests: XCTestCase {
         let score2 = TestResult(identifier: "score2", score: 2, startDate: Date(), endDate: Date())
         let score3 = TestResult(identifier: "score2", score: 3, startDate: Date(), endDate: Date())
         
-        var taskResult = RSDTaskResultObject(identifier: "topLevel")
+        let taskResult = RSDTaskResultObject(identifier: "topLevel")
         
         // Build section A
-        var subResultA = RSDTaskResultObject(identifier: "sectionA")
-        subResultA.appendStepHistory(with: RSDResultObject(identifier: "intruction"))
+        let subResultA = RSDTaskResultObject(identifier: "sectionA")
+        subResultA.appendStepHistory(with: ResultObject(identifier: "intruction"))
         subResultA.appendStepHistory(with: score1)
         subResultA.appendStepHistory(with: answer1)
-        var collection1 = RSDCollectionResultObject(identifier: "collection")
+        let collection1 = CollectionResultObject(identifier: "collection")
         collection1.appendInputResults(with: answer2)
         collection1.appendInputResults(with: answer3)
         subResultA.appendStepHistory(with: collection1)
         taskResult.appendStepHistory(with: subResultA)
         
         // Build section B
-        var subResultB = RSDTaskResultObject(identifier: "sectionB")
-        subResultB.appendStepHistory(with: RSDResultObject(identifier: "intruction"))
+        let subResultB = RSDTaskResultObject(identifier: "sectionB")
+        subResultB.appendStepHistory(with: ResultObject(identifier: "intruction"))
         subResultB.appendStepHistory(with: score2)
         taskResult.appendStepHistory(with: subResultB)
         
         // Build section C
-        var subResultC = RSDTaskResultObject(identifier: "sectionC")
-        subResultC.appendStepHistory(with: RSDResultObject(identifier: "intruction"))
+        let subResultC = RSDTaskResultObject(identifier: "sectionC")
+        subResultC.appendStepHistory(with: ResultObject(identifier: "intruction"))
         subResultC.appendStepHistory(with: score3)
         taskResult.appendStepHistory(with: subResultC)
         

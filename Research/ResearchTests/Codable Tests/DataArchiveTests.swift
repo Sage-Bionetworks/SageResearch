@@ -34,6 +34,7 @@
 import XCTest
 @testable import Research
 import JsonModel
+import AssessmentModel
 
 class DataArchiveTests: XCTestCase {
     
@@ -60,16 +61,16 @@ class DataArchiveTests: XCTestCase {
             XCTAssertTrue(FileManager.default.fileExists(atPath: outputDir.path))
             
             // add the first collection to the task path
-            taskViewModel.taskResult.appendStepHistory(with: RSDResultObject(identifier: "step1"))
-            taskViewModel.taskResult.appendStepHistory(with: RSDResultObject(identifier: "step2"))
+            taskViewModel.taskResult.appendStepHistory(with: ResultObject(identifier: "step1"))
+            taskViewModel.taskResult.appendStepHistory(with: ResultObject(identifier: "step2"))
             taskViewModel.taskResult.appendStepHistory(with: buildCollectionResult(identifier: "collection"))
             taskViewModel.taskResult.appendStepHistory(with: buildSingleAnswerResult(identifier: "single", answer: 5))
             taskViewModel.taskResult.appendStepHistory(with: AnswerResultObject(identifier: "only", value: .integer(7)))
             
             // add the second collection as a subsection
-            var sectionResult = RSDTaskResultObject(identifier: "sectionA")
-            sectionResult.appendStepHistory(with: RSDResultObject(identifier: "step1"))
-            sectionResult.appendStepHistory(with: RSDResultObject(identifier: "step2"))
+            let sectionResult = RSDTaskResultObject(identifier: "sectionA")
+            sectionResult.appendStepHistory(with: ResultObject(identifier: "step1"))
+            sectionResult.appendStepHistory(with: ResultObject(identifier: "step2"))
             sectionResult.appendStepHistory(with: buildCollectionResult(identifier: "collection"))
             sectionResult.appendStepHistory(with: buildSingleAnswerResult(identifier: "single", answer: 3))
             sectionResult.appendStepHistory(with: AnswerResultObject(identifier: "only", value: .integer(9)))
@@ -143,14 +144,14 @@ class DataArchiveTests: XCTestCase {
             XCTAssertTrue(FileManager.default.fileExists(atPath: outputDir.path))
             
             // add the first collection to the task path
-            taskViewModel.taskResult.appendStepHistory(with: RSDResultObject(identifier: "step1"))
-            taskViewModel.taskResult.appendStepHistory(with: RSDResultObject(identifier: "step2"))
+            taskViewModel.taskResult.appendStepHistory(with: ResultObject(identifier: "step1"))
+            taskViewModel.taskResult.appendStepHistory(with: ResultObject(identifier: "step2"))
             taskViewModel.taskResult.appendStepHistory(with: buildCollectionResult(identifier: "collection"))
             
             // add the second collection as a subsection
-            var sectionResult = RSDTaskResultObject(identifier: "sectionA")
-            sectionResult.appendStepHistory(with: RSDResultObject(identifier: "step1"))
-            sectionResult.appendStepHistory(with: RSDResultObject(identifier: "step2"))
+            let sectionResult = RSDTaskResultObject(identifier: "sectionA")
+            sectionResult.appendStepHistory(with: ResultObject(identifier: "step1"))
+            sectionResult.appendStepHistory(with: ResultObject(identifier: "step2"))
             sectionResult.appendStepHistory(with: buildCollectionResult(identifier: "collection"))
             taskViewModel.taskResult.appendStepHistory(with: sectionResult)
             
@@ -228,16 +229,16 @@ class DataArchiveTests: XCTestCase {
         return FileResultObject(identifier: identifier, url: url, contentType: "text/plain")
     }
     
-    func buildCollectionResult(identifier: String) -> RSDCollectionResultObject {
-        var collectionResult = RSDCollectionResultObject(identifier: identifier)
+    func buildCollectionResult(identifier: String) -> CollectionResultObject {
+        let collectionResult = CollectionResultObject(identifier: identifier)
         for ii in 1...3 {
             collectionResult.appendInputResults(with: AnswerResultObject(identifier: "input\(ii)", value: .integer(ii)))
         }
         return collectionResult
     }
     
-    func buildSingleAnswerResult(identifier: String, answer: Int) -> RSDCollectionResultObject {
-        var collectionResult = RSDCollectionResultObject(identifier: identifier)
+    func buildSingleAnswerResult(identifier: String, answer: Int) -> CollectionResultObject {
+        let collectionResult = CollectionResultObject(identifier: identifier)
         collectionResult.appendInputResults(with: AnswerResultObject(identifier: identifier, value: .integer(answer)))
         return collectionResult
     }

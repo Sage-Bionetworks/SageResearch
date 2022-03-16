@@ -8,8 +8,8 @@ let package = Package(
     defaultLocalization: "en",
     platforms: [
         // Add support for all platforms starting from a specific version.
-        .macOS(.v10_15),
-        .iOS(.v11),
+        .iOS(.v14),
+        .macOS(.v11),
         .watchOS(.v4),
         .tvOS(.v11)
     ],
@@ -32,10 +32,13 @@ let package = Package(
         // Dependencies declare other packages that this package depends on.
         .package(name: "JsonModel",
                  url: "https://github.com/Sage-Bionetworks/JsonModel-Swift.git",
-                 from: "1.3.5"),
+                 from: "2.0.0"),
+        .package(name: "AssessmentModel",
+                 url: "https://github.com/Sage-Bionetworks/AssessmentModelKMM.git",
+                 from: "0.5.2"),
         .package(name: "MobilePassiveData",
                  url: "https://github.com/Sage-Bionetworks/MobilePassiveData-SDK.git",
-                 from: "1.2.3"),
+                 from: "2.0.1"),
     ],
     targets: [
 
@@ -43,10 +46,11 @@ let package = Package(
         // target is developed in Obj-c so it requires a separate target.
         .target(
             name: "Research",
-            dependencies: ["JsonModel",
-                           "Formatters",
-                           .product(name: "MobilePassiveData",
-                                    package:  "MobilePassiveData"),
+            dependencies: [
+                "JsonModel",
+                "Formatters",
+                .product(name: "AssessmentModel", package:  "AssessmentModel"),
+                .product(name: "MobilePassiveData", package:  "MobilePassiveData"),
             ],
             path: "Research/Research/",
             exclude: ["Info-iOS.plist",

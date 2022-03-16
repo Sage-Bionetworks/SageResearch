@@ -34,6 +34,7 @@
 import XCTest
 @testable import Research
 import JsonModel
+import AssessmentModel
 
 class ResultTests: XCTestCase {
 
@@ -47,7 +48,7 @@ class ResultTests: XCTestCase {
 
     func testCollectionResultExtensions() {
         
-        var collection = RSDCollectionResultObject(identifier: "test")
+        let collection = CollectionResultObject(identifier: "test")
         let answers = ["a" : 3, "b": 5, "c" : 7]
         answers.forEach {
             let answerResult = AnswerResultObject(identifier: $0.key, value: .integer($0.value))

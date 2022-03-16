@@ -34,6 +34,7 @@
 import Foundation
 import JsonModel
 import MobilePassiveData
+import AssessmentModel
 
 
 /// The serialization "type" key for decoding of the task. This is used to decode the task using a
@@ -87,7 +88,7 @@ public final class TaskSerializer : IdentifiableInterfaceSerializer, Polymorphic
         .init(propertyType: .reference(RSDTaskType.documentableType()))
     }
     
-    public func add(_ example: SerializableTask) {
+    public func add(_ example: RSDTask) {
         if let idx = examples.firstIndex(where: {
             ($0 as! PolymorphicRepresentable).typeName == example.typeName }) {
             examples.remove(at: idx)
@@ -104,6 +105,12 @@ public protocol SerializableTask : RSDTask, PolymorphicRepresentable {
 }
 
 extension AssessmentTaskObject : SerializableTask {
+}
+
+extension AbstractTaskObject : RSDSageResearchTask {
+    public func instantiateResult() -> ResultData {
+        instantiateTaskResult()
+    }
 }
 
 /// This is an abstract implementation of `RSDTask` that handles much of the default properties
@@ -159,8 +166,7 @@ open class AbstractTaskObject : RSDUIActionHandlerObject, RSDCopyTask, RSDTracki
     open func instantiateTaskResult() -> RSDTaskResult {
         RSDTaskResultObject(identifier: self.identifier,
                             versionString: self.versionString,
-                            assessmentIdentifier: self.identifier,
-                            schemaIdentifier: self.schemaIdentifier)
+                            assessmentIdentifier: self.identifier)
     }
     
     open func validate() throws {

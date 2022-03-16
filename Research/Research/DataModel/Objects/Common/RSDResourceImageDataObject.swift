@@ -33,6 +33,7 @@
 
 import Foundation
 import JsonModel
+import AssessmentModel
 
 extension String {
     
@@ -69,6 +70,14 @@ public struct RSDResourceImageDataObject : RSDThemeResourceImageData, Codable, H
     /// The name of the image.
     public let imageName: String
     
+    public var label: String? {
+        imageName
+    }
+    
+    public var imageIdentifier: String {
+        imageName
+    }
+
     /// For a raw resource file, this is the file extension for getting at the resource.
     public let rawFileExtension: String?
     
@@ -84,12 +93,12 @@ public struct RSDResourceImageDataObject : RSDThemeResourceImageData, Codable, H
     }
     
     /// Always returns `nil`.
-    public var placementType: RSDImagePlacementType? {
-        return nil
+    public var placementHint: String? {
+        nil
     }
     
     /// Always returns `nil`.
-    public var imageSize: RSDSize? {
+    public var imageSize: ImageSize? {
         return nil
     }
     

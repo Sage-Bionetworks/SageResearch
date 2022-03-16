@@ -33,6 +33,7 @@
 
 import Foundation
 import JsonModel
+import AssessmentModel
 
 public struct RSDDocumentCreator {
     
@@ -40,11 +41,7 @@ public struct RSDDocumentCreator {
         
         var allEnums: [DocumentableStringEnum.Type] = [
         RSDCohortRuleOperator.self,
-        RSDKeyboardType.self,
         RSDSurveyRuleOperator.self,
-        RSDTextAutocapitalizationType.self,
-        RSDTextAutocorrectionType.self,
-        RSDTextSpellCheckingType.self,
         RSDWeekday.self,
         ]
         
@@ -64,16 +61,14 @@ public struct RSDDocumentCreator {
         ]
 
     let allCodableObjects: [DocumentableObject.Type] = [
-        RSDAnimatedImageThemeElementObject.self,
         RSDCohortNavigationRuleObject.self,
-        RSDCollectionResultObject.self,
+        CollectionResultObject.self,
         RSDDateRangeObject.self,
         RSDNavigationUIActionObject.self,
         RSDResourceTransformerObject.self,
-        RSDResultObject.self,
+        ResultObject.self,
         RSDTaskInfoStepObject.self,
-        RSDTaskResultObject.self,
-        RSDUIActionObject.self,
+        ButtonActionInfoObject.self,
         RSDViewThemeElementObject.self,
         RSDWebViewUIActionObject.self,
         RSDVideoViewUIActionObject.self,
@@ -86,27 +81,10 @@ public struct RSDDocumentCreator {
         RSDActiveUIStepObject.self,
         RSDOverviewStepObject.self,
         RSDResultSummaryStepObject.self,
-        RSDSectionStepObject.self,
         //RSDStepTransformerObject.self, // syoung 04/14/2020 Cannot test the step transformer as a generic.
         RSDColorPlacementThemeElementObject.self,
         RSDSingleColorThemeElementObject.self,
         RSDConditionalStepNavigatorObject.self,
         RSDTaskGroupObject.self,
-        ChoiceQuestionStepObject.self,
-        MultipleInputQuestionStepObject.self,
-        SimpleQuestionStepObject.self,
-        StringChoiceQuestionStepObject.self,
-        DoubleTextInputItemObject.self,
-        IntegerTextInputItemObject.self,
-        StringTextInputItemObject.self,
-        YearTextInputItemObject.self,
-        DateTimeInputItemObject.self,
-        DateInputItemObject.self,
-        TimeInputItemObject.self,
-        StringChoicePickerInputItemObject.self,
-        ChoicePickerInputItemObject.self,
-        CheckboxInputItemObject.self,
-        HeightInputItemBuilderObject.self,
-        WeightInputItemBuilderObject.self,
         ]
 }

@@ -33,6 +33,7 @@
 
 import JsonModel
 import Foundation
+import AssessmentModel
 
 /// Base class implementation for a step view model.
 ///

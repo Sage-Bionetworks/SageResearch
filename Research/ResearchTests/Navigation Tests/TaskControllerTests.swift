@@ -33,6 +33,7 @@
 
 import JsonModel
 import XCTest
+import AssessmentModel
 @testable import Research
 @testable import Research_UnitTest
 

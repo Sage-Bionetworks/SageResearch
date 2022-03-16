@@ -33,6 +33,7 @@
 
 import JsonModel
 import XCTest
+import AssessmentModel
 @testable import Research
 
 class StepViewModelTests: XCTestCase {
@@ -64,7 +65,7 @@ class StepViewModelTests: XCTestCase {
     func testAction_TopActionOnly() {
 
         // set a non-nil action at the top level
-        task.actions = [.navigation(.cancel) : RSDUIActionObject(buttonTitle: "Cancel")]
+        task.actions = [.navigation(.cancel) : ButtonActionInfoObject(buttonTitle: "Cancel")]
         
         let action = stepXModel.action(for: .navigation(.cancel))
         XCTAssertNotNil(action)
@@ -74,8 +75,8 @@ class StepViewModelTests: XCTestCase {
     func testAction_TopActionAndStepAction() {
 
         // set a non-nil action at the top level
-        task.actions = [.navigation(.cancel) : RSDUIActionObject(buttonTitle: "Cancel")]
-        stepX.actions = [.navigation(.cancel) : RSDUIActionObject(buttonTitle: "Back")]
+        task.actions = [.navigation(.cancel) : ButtonActionInfoObject(buttonTitle: "Cancel")]
+        stepX.actions = [.navigation(.cancel) : ButtonActionInfoObject(buttonTitle: "Back")]
         
         let action = stepXModel.action(for: .navigation(.cancel))
         XCTAssertNotNil(action)
@@ -115,10 +116,10 @@ class StepViewModelTests: XCTestCase {
     func testShouldHideAction_TaskLevelShouldHide_NonNilAction() {
         
         task.shouldHideActions = [.navigation(.cancel), .navigation(.goForward), .navigation(.goBackward), .navigation(.skip)]
-        stepX.actions = [.navigation(.cancel) : RSDUIActionObject(buttonTitle: "Cancel"),
-                         .navigation(.goForward) : RSDUIActionObject(buttonTitle: "Next"),
-                         .navigation(.goBackward) : RSDUIActionObject(buttonTitle: "Back"),
-                         .navigation(.skip) : RSDUIActionObject(buttonTitle: "Skip")]
+        stepX.actions = [.navigation(.cancel) : ButtonActionInfoObject(buttonTitle: "Cancel"),
+                         .navigation(.goForward) : ButtonActionInfoObject(buttonTitle: "Next"),
+                         .navigation(.goBackward) : ButtonActionInfoObject(buttonTitle: "Back"),
+                         .navigation(.skip) : ButtonActionInfoObject(buttonTitle: "Skip")]
         
         XCTAssertFalse(stepXModel.shouldHideAction(for: .navigation(.cancel)))
         XCTAssertFalse(stepXModel.shouldHideAction(for: .navigation(.goForward)))
@@ -158,14 +159,14 @@ class StepViewModelTests: XCTestCase {
         stepXModel = RSDStepViewModel(step: stepX, parent: sectionA)
         sectionA.currentChild = stepXModel
         
-        top.taskResult.stepHistory = [RSDResultObject(identifier: "step1"),
-                                      RSDResultObject(identifier: "step2")]
+        top.taskResult.stepHistory = [ResultObject(identifier: "step1"),
+                                      ResultObject(identifier: "step2")]
     }
     
     func testResultSummaryStepViewModel_String() {
         let resultStep = RSDResultSummaryStepObject(identifier: "feedback", resultIdentifier: "foo")
         let answerResult = AnswerResultObject(identifier: "foo", value: .string("blu"))
-        var taskResult = RSDTaskResultObject(identifier: "magoo")
+        let taskResult = RSDTaskResultObject(identifier: "magoo")
         taskResult.stepHistory = [answerResult]
         let stepViewModel = RSDResultSummaryStepViewModel(step: resultStep, parent: nil)
         stepViewModel.taskResult = taskResult
@@ -178,7 +179,7 @@ class StepViewModelTests: XCTestCase {
     func testResultSummaryStepViewModel_Decimal() {
         let resultStep = RSDResultSummaryStepObject(identifier: "feedback", resultIdentifier: "foo")
         let answerResult = AnswerResultObject(identifier: "foo", value: .number(1.234211))
-        var taskResult = RSDTaskResultObject(identifier: "magoo")
+        let taskResult = RSDTaskResultObject(identifier: "magoo")
         taskResult.stepHistory = [answerResult]
         let stepViewModel = RSDResultSummaryStepViewModel(step: resultStep, parent: nil)
         stepViewModel.taskResult = taskResult
@@ -191,15 +192,15 @@ class StepViewModelTests: XCTestCase {
     func testResultSummaryStepViewModel_Collection() {
         let resultStep = RSDResultSummaryStepObject(identifier: "feedback", resultIdentifier: "foo", unitText: nil, stepResultIdentifier: "step2")
 
-        var result1 = RSDCollectionResultObject(identifier: "step1")
+        let result1 = CollectionResultObject(identifier: "step1")
         let answerResult1 = AnswerResultObject(identifier: "foo", value: .string("magoo"))
-        result1.children = [answerResult1, RSDResultObject(identifier: "roo")]
+        result1.children = [answerResult1, ResultObject(identifier: "roo")]
         
-        var result2 = RSDCollectionResultObject(identifier: "step2")
+        let result2 = CollectionResultObject(identifier: "step2")
         let answerResult2 = AnswerResultObject(identifier: "foo", value: .string("blu"))
-        result2.children = [answerResult2, RSDResultObject(identifier: "roo")]
+        result2.children = [answerResult2, ResultObject(identifier: "roo")]
         
-        var taskResult = RSDTaskResultObject(identifier: "magoo")
+        let taskResult = RSDTaskResultObject(identifier: "magoo")
         taskResult.stepHistory = [result1, result2]
         
         let stepViewModel = RSDResultSummaryStepViewModel(step: resultStep, parent: nil)

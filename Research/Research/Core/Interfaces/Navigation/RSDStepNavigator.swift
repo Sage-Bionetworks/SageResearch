@@ -32,6 +32,7 @@
 //
 
 import Foundation
+import AssessmentModel
 
 /// `RSDStepNavigator` is used by the `RSDTaskController` to determine the order of presentation of the steps
 /// in a task. The navigator should include navigation that is based on the input model and the results rather
@@ -138,3 +139,91 @@ public protocol RSDCopyStepNavigator : RSDStepNavigator {
     /// - returns: A copy of this navigator without the given steps.
     func copyAndRemove(_ stepIdentifiers: [String]) -> Self
 }
+
+extension RSDStepDirection {
+    func pathDirection() -> PathMarker.Direction {
+        switch self {
+        case .reverse:
+            return .backward
+        default:
+            return .forward
+        }
+    }
+}
+
+public struct RSDStepNavigationWrapper : Navigator {
+    
+    let stepNavigator: RSDStepNavigator
+    public init(_ stepNavigator: RSDStepNavigator) {
+        self.stepNavigator = stepNavigator
+    }
+    
+    public func node(identifier: String) -> Node? {
+        self.stepNavigator.step(with: identifier)
+    }
+
+    public func nodeAfter(currentNode: Node?, branchResult: BranchNodeResult) -> NavigationPoint {
+        guard let taskResult = branchResult as? RSDTaskResult else {
+            fatalError("Cannot run this navigator using a \(branchResult). Must conform to 'RSDTaskResult'.")
+        }
+        let step = currentNode as? RSDStep
+        var result = taskResult
+        let ret = self.stepNavigator.step(after: step, with: &result)
+        if ret.step == nil, self.stepNavigator.shouldExit(after: step, with: result) {
+            return .init(node: ret.step, branchResult: result, direction: .exit)
+        }
+        else {
+            return .init(node: ret.step, branchResult: result, direction: ret.direction.pathDirection())
+        }
+    }
+
+    public func nodeBefore(currentNode: Node?, branchResult: BranchNodeResult) -> NavigationPoint {
+        guard let taskResult = branchResult as? RSDTaskResult else {
+            fatalError("Cannot run this navigator using \(branchResult). Must conform to 'RSDTaskResult'.")
+        }
+        guard let currentNode = currentNode else {
+            return .init(node: nil, branchResult: branchResult, direction: .backward)
+        }
+        guard let step = currentNode as? RSDStep else {
+            fatalError("Cannot run this navigator using \(currentNode). Must conform to 'RSDStep'.")
+        }
+        var result = taskResult
+        let ret = self.stepNavigator.step(before: step, with: &result)
+        return .init(node: ret, branchResult: result, direction: .backward)
+    }
+
+    public func hasNodeAfter(currentNode: Node, branchResult: BranchNodeResult) -> Bool {
+        guard let taskResult = branchResult as? RSDTaskResult else {
+            fatalError("Cannot run this navigator using a \(branchResult). Must conform to 'RSDTaskResult'.")
+        }
+        guard let step = currentNode as? RSDStep else { return false }
+        return self.stepNavigator.hasStep(after: step, with: taskResult)
+    }
+
+    public func allowBackNavigation(currentNode: Node, branchResult: BranchNodeResult) -> Bool {
+        guard let taskResult = branchResult as? RSDTaskResult else {
+            fatalError("Cannot run this navigator using a \(branchResult). Must conform to 'RSDTaskResult'.")
+        }
+        guard let step = currentNode as? RSDStep else { return false }
+        return self.stepNavigator.hasStep(before: step, with: taskResult)
+    }
+
+    public func progress(currentNode: Node, branchResult: BranchNodeResult) -> AssessmentModel.Progress? {
+        guard let taskResult = branchResult as? RSDTaskResult else {
+            fatalError("Cannot run this navigator using a \(branchResult). Must conform to 'RSDTaskResult'.")
+        }
+        guard let step = currentNode as? RSDStep,
+              let ret = self.stepNavigator.progress(for: step, with: taskResult)
+        else {
+            return nil
+        }
+        return .init(current: ret.current, total: ret.total, isEstimated: ret.isEstimated)
+    }
+
+    public func isCompleted(currentNode: Node, branchResult: BranchNodeResult) -> Bool {
+        guard let step = currentNode as? RSDStep else { return false }
+        return !self.hasNodeAfter(currentNode: step, branchResult: branchResult) &&
+                (step is CompletionStep || (step.stepType == .completion))
+    }
+}
+

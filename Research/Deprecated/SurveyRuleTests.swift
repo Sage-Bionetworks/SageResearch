@@ -36,6 +36,7 @@ import Foundation
 import XCTest
 import Research
 import JsonModel
+import AssessmentModel
 
 class SurveyRuleTests: XCTestCase {
     
@@ -60,7 +61,7 @@ class SurveyRuleTests: XCTestCase {
         step.actions = [.navigation(.skip) : skipAction]
         
         var (taskResult, answerResult) = createTaskResult(for: step, with: nil)
-        let skipResult = RSDResultObject(identifier: answerResult.identifier,
+        let skipResult = ResultObject(identifier: answerResult.identifier,
                                          startDate: answerResult.startDate,
                                          endDate: answerResult.endDate,
                                          skipToIdentifier: "bar")
@@ -84,7 +85,7 @@ class SurveyRuleTests: XCTestCase {
         step.actions = [.navigation(.skip) : skipAction]
         
         var (taskResult, answerResult) = createTaskResult(for: step, with: .object(["field1":"boo","field2":3]))
-        let skipResult = RSDResultObject(identifier: answerResult.identifier,
+        let skipResult = ResultObject(identifier: answerResult.identifier,
                                          startDate: answerResult.startDate,
                                          endDate: answerResult.endDate,
                                          skipToIdentifier: "bar")
@@ -102,10 +103,10 @@ class SurveyRuleTests: XCTestCase {
         let step = RSDUIStepObject(identifier: "foo")
         
         var taskResult = RSDTaskResultObject(identifier: "boobaloo")
-        taskResult.appendStepHistory(with: RSDResultObject(identifier: "instruction1"))
-        taskResult.appendStepHistory(with: RSDResultObject(identifier: "instruction2"))
+        taskResult.appendStepHistory(with: ResultObject(identifier: "instruction1"))
+        taskResult.appendStepHistory(with: ResultObject(identifier: "instruction2"))
         
-        var stepResult = RSDResultObject(identifier: "foo")
+        var stepResult = ResultObject(identifier: "foo")
         stepResult.skipToIdentifier = "bar"
         taskResult.appendStepHistory(with: stepResult)
         
@@ -1019,8 +1020,8 @@ class SurveyRuleTests: XCTestCase {
     
     func createTaskResult(for step: QuestionStep, with jsonValue: JsonElement?) -> (RSDTaskResultObject, AnswerResultObject) {
         var taskResult = RSDTaskResultObject(identifier: "boobaloo")
-        taskResult.appendStepHistory(with: RSDResultObject(identifier: "instruction1"))
-        taskResult.appendStepHistory(with: RSDResultObject(identifier: "instruction2"))
+        taskResult.appendStepHistory(with: ResultObject(identifier: "instruction1"))
+        taskResult.appendStepHistory(with: ResultObject(identifier: "instruction2"))
         
         let answerResult = step.instantiateStepResult() as! AnswerResultObject
         taskResult.appendStepHistory(with: answerResult)

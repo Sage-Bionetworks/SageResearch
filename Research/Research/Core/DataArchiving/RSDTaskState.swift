@@ -33,6 +33,7 @@
 
 import Foundation
 import JsonModel
+import AssessmentModel
 
 /// The task state object is a base class implementation that can upload and archive results, return
 /// the encoded result, and manage file cleanup.

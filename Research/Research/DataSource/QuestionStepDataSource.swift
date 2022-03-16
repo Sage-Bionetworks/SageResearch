@@ -33,6 +33,10 @@
 
 import Foundation
 import JsonModel
+import AssessmentModel
+
+public protocol RSDQuestionStep : QuestionStep, RSDTableStep {
+}
 
 public final class QuestionStepDataSource : RSDStepViewModel, RSDTableDataSource {
 
@@ -41,7 +45,7 @@ public final class QuestionStepDataSource : RSDStepViewModel, RSDTableDataSource
     public let sections: [RSDTableSection]
     public let itemGroup: QuestionTableItemGroup
     
-    public init(step: QuestionStep, parent: RSDPathComponent?, supportedHints: Set<RSDFormUIHint>? = nil) {
+    public init(step: RSDQuestionStep, parent: RSDPathComponent?, supportedHints: Set<RSDFormUIHint>? = nil) {
         
         let previousValue: JsonElement? = {
             guard let taskVM = parent as? RSDTaskViewModel else { return nil }

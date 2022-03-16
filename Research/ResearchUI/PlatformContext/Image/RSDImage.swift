@@ -41,6 +41,7 @@ public typealias RSDImage = UIImage
 
 import JsonModel
 import Research
+import AssessmentModel
 
 extension RSDImage : RSDImageData {
     
@@ -64,14 +65,16 @@ extension RSDImage : RSDImageThemeElement {
     }
     
     /// Use `size`.
-    public var imageSize: RSDSize? {
-        return RSDSize(width: Double(self.size.width), height: Double(self.size.height))
+    public var imageSize: ImageSize? {
+        return ImageSize(width: Double(self.size.width), height: Double(self.size.height))
     }
     
     /// MARK: Not used.
     
-    public var placementType: RSDImagePlacementType? { return nil }
+    public var placementHint: String? { return nil }
     public var factoryBundle: ResourceBundle? { return nil }
     public var bundleIdentifier: String? { return nil }
     public var packageName: String? { return nil }
+    public var label: String? { self.accessibilityLabel }
+
 }

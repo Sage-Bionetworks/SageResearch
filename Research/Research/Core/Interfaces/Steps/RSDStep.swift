@@ -33,6 +33,7 @@
 
 import JsonModel
 import Foundation
+import AssessmentModel
 
 /// `RSDStep` is the base protocol for the steps that can compose a task for presentation using a
 /// controller appropriate to the device and application. Each `RSDStep` object represents one logical
@@ -47,7 +48,7 @@ import Foundation
 /// A step can be a question, an active test, or a simple instruction. An `RSDStep` subclass is usually
 /// paired with an `RSDStepController` that controls the actions of the step.
 ///
-public protocol RSDStep {
+public protocol RSDStep : Node {
     
     /// A short string that uniquely identifies the step within the task. The identifier is reproduced in
     /// the results  of a step history.
@@ -71,7 +72,7 @@ public protocol RSDStep {
 
 /// `RSDCopyStep` is a step that supports creating a copy of itself that has specified properties mutated
 /// to return a new instance and/or includes mutated properties.
-public protocol RSDCopyStep : RSDStep, RSDCopyWithIdentifier {
+public protocol RSDCopyStep : RSDStep, CopyWithIdentifier {
 
     /// Copy the step to a new instance with the given identifier and user info.
     /// - parameters:

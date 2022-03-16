@@ -32,6 +32,7 @@
 //
 
 import Foundation
+import AssessmentModel
 
 
 /// A tracking rule is used to track changes that are applied during a task that should be saved at the
