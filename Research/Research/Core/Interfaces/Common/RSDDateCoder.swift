@@ -33,6 +33,7 @@
 
 import JsonModel
 import Foundation
+import AssessmentModel
 
 /// `RSDDateCoder` is used to handle specifying date encoding/decoding. If the calendar components supported by
 /// this formatter only include a subset of all the components then only those components should be displayed

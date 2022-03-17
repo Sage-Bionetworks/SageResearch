@@ -33,6 +33,7 @@
 
 import JsonModel
 import Foundation
+import AssessmentModel
 
 /// The tracking task protocol is intended for tasks that use scoring data from a previous task run to
 /// inform subsequent runs of the same task by a given participant. `RSDTaskViewModel` will check a task for

@@ -33,6 +33,7 @@
 
 import JsonModel
 import Foundation
+import AssessmentModel
 
 /// The data archive manager controls vending a new archive (as appropriate) and handling state. It is a
 /// composite protocol of the methods defined using Swift, which are required but can include Swift objects

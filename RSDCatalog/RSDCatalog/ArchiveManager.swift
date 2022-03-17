@@ -34,6 +34,7 @@
 import Foundation
 import JsonModel
 import Research
+import AssessmentModel
 
 public class ArchiveManager : NSObject, RSDDataArchiveManager {
         

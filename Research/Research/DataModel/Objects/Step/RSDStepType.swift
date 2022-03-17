@@ -33,6 +33,7 @@
 
 import Foundation
 import JsonModel
+import AssessmentModel
 
 /// The type of the step. This is used to decode the step using a `RSDFactory`. It can also be used to customize
 /// the UI.
@@ -131,21 +132,9 @@ extension RSDStepType : DocumentableStringLiteral {
     }
 }
 
-public final class StepSerializer : IdentifiableInterfaceSerializer, PolymorphicSerializer {
-    public var documentDescription: String? {
-        """
-        `Step` is the base protocol for the steps that can compose a task for presentation using
-        a controller appropriate to the device and application. Each `RSDStep` object represents one
-        logical piece of data entry, information, or activity in a larger task.
-        """.replacingOccurrences(of: "\n", with: " ").replacingOccurrences(of: "  ", with: "\n")
-    }
-    
-    public var jsonSchema: URL {
-        URL(string: "\(RSDFactory.shared.modelName(for: self.interfaceName)).json", relativeTo: kSageJsonSchemaBaseURL)!
-    }
-    
-    override init() {
-        let uiExamples: [SerializableStep] = [
+extension NodeSerializer {
+    func addAllSteps() {
+        let uiExamples: [Node] = [
             RSDActiveUIStepObject.serializationExample(),
             RSDCountdownUIStepObject.serializationExample(),
             RSDCompletionStepObject.serializationExample(),
@@ -153,32 +142,13 @@ public final class StepSerializer : IdentifiableInterfaceSerializer, Polymorphic
             RSDResultSummaryStepObject.serializationExample(),
             RSDOverviewStepObject.serializationExample(),
         ]
-        let questionExamples: [SerializableStep] = [
-            ChoiceQuestionStepObject.serializationExample(),
-            MultipleInputQuestionStepObject.serializationExample(),
-            SimpleQuestionStepObject.serializationExample(),
-            StringChoiceQuestionStepObject.serializationExample(),
-        ]
-        let nodeExamples: [SerializableStep] = [
+        let taskExamples: [Node] = [
             RSDSectionStepObject.serializationExample(),
             RSDTaskInfoStepObject.serializationExample(),
             RSDStepTransformerObject.serializableExample(),
         ]
-        self.examples = [uiExamples, questionExamples, nodeExamples].flatMap { $0 }
-    }
-    
-    public private(set) var examples: [RSDStep]
-    
-    public override class func typeDocumentProperty() -> DocumentProperty {
-        .init(propertyType: .reference(RSDStepType.documentableType()))
-    }
-    
-    public func add(_ example: SerializableStep) {
-        if let idx = examples.firstIndex(where: {
-            ($0 as! PolymorphicRepresentable).typeName == example.typeName }) {
-            examples.remove(at: idx)
-        }
-        examples.append(example)
+        self.add(contentsOf: uiExamples)
+        self.add(contentsOf: taskExamples)
     }
 }
 
@@ -203,7 +173,7 @@ extension RSDTaskInfoStepObject : SerializableStep {
 
 extension RSDSectionStepObject : SerializableStep {
     internal static func serializationExample() -> RSDSectionStepObject {
-        RSDSectionStepObject(identifier: RSDStepType.section.rawValue, steps: [])
+        .init(identifier: "example", steps: [])
     }
 }
 

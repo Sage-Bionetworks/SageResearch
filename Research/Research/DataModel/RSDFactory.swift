@@ -35,6 +35,7 @@ import Foundation
 import JsonModel
 import Formatters
 import MobilePassiveData
+import AssessmentModel
 
 public protocol RSDFactoryTypeRepresentable : RawRepresentable, ExpressibleByStringLiteral {
     var stringValue: String { get }
@@ -46,32 +47,28 @@ open class RSDFactory : MobilePassiveDataFactory {
     
     public static var shared = RSDFactory.defaultFactory
     
-    public let buttonActionSerializer = ButtonActionSerializer()
     public let colorMappingSerializer = ColorMappingSerializer()
-    public let imageThemeSerializer = ImageThemeSerializer()
-    public let inputItemSerializer = InputItemSerializer()
-    public let resultNodeSerializer = ResultNodeSerializer()
-    public let stepSerializer = StepSerializer()
     public let taskSerializer = TaskSerializer()
     public let viewThemeSerializer = ViewThemeSerializer()
     
+    public var stepSerializer : NodeSerializer {
+        nodeSerializer
+    }
+    
     public required init() {
         super.init()
-        self.registerSerializer(buttonActionSerializer)
+        
         self.registerSerializer(colorMappingSerializer)
-        self.registerSerializer(imageThemeSerializer)
-        self.registerSerializer(inputItemSerializer)
-        self.registerSerializer(resultNodeSerializer)
-        self.registerSerializer(stepSerializer)
         self.registerSerializer(taskSerializer)
         self.registerSerializer(viewThemeSerializer)
         
-        // Add results from this factory
-        self.resultSerializer.registerLibraryExamples(with: self)
+        self.resultSerializer.add(RSDTaskResultObject(identifier: "example"))
+        self.resultSerializer.add(RSDNavigationResultObject(result: ResultObject(identifier: "foo"), skipToIdentifier: "baroo"))
+        self.buttonActionSerializer.addButtons()
+        self.nodeSerializer.addAllSteps()
         
         // Add root objects
         self.registerRootObject(RSDAssessmentTaskObject())
-        self.registerRootObject(RSDTaskResultObject())
         self.registerRootObject(RSDTaskMetadata())
     }
     
@@ -94,14 +91,6 @@ open class RSDFactory : MobilePassiveDataFactory {
     
     open override func modelName(for className: String) -> String {
         switch className {
-        case buttonActionSerializer.interfaceName:
-            return "ButtonActionInfo"
-        case imageThemeSerializer.interfaceName:
-            return "ImageInfo"
-        case inputItemSerializer.interfaceName:
-            return "InputItem"
-        case "UIActionType":
-            return "ButtonAction"
         default:
             var modelName = className
             let objcPrefix = "RSD"
@@ -131,6 +120,17 @@ open class RSDFactory : MobilePassiveDataFactory {
         return try container.decodeIfPresent(String.self, forKey: .type)
     }
     
+    open override func serializer<T>(for type: T.Type) -> GenericSerializer? {
+        if type == RSDStep.self {
+            return nodeSerializer
+        }
+        else if type == RSDUIAction.self {
+            return buttonActionSerializer
+        }
+        else {
+            return super.serializer(for: type)
+        }
+    }
     
     // MARK: Task factory
 
@@ -190,53 +190,6 @@ open class RSDFactory : MobilePassiveDataFactory {
             self.task = try decoder.factory.decodePolymorphicObject(RSDTask.self, from: decoder)
         }
     }
-    
-    
-    // MARK: Task Info factory
-    
-    /// Decode the task info from this decoder. This method *must* return a task info object.
-    /// The default implementation will return a `RSDTaskInfoStepObject`.
-    /// - parameter decoder: The decoder to use to instantiate the object.
-    /// - returns: The task info created from this decoder.
-    /// - throws: `DecodingError` if the object cannot be decoded.
-    /// - seealso: `RSDTaskGroupObject`
-    @available(*, deprecated, message: "Use of a default type is deprecated. Please convert your decode `RSDTaskInfoObject` or the appropriate replacement directly.")
-    open func decodeTaskInfo(from decoder: Decoder) throws -> RSDTaskInfo {
-        return try RSDTaskInfoObject(from: decoder)
-    }
-    
-    
-    // MARK: Schema Info factory
-    
-    /// Decode the schema info from this decoder. This method *must* return a schema info object.
-    /// The default implementation will return a `RSDSchemaInfoObject`.
-    /// - parameter decoder: The decoder to use to instantiate the object.
-    /// - returns: The schema info created from this decoder.
-    /// - throws: `DecodingError` if the object cannot be decoded.
-    /// - seealso: `RSDTaskResultObject`
-    @available(*, deprecated, message: "Implement `AssessmentResult` instead")
-    open func decodeSchemaInfo(from decoder: Decoder) throws -> RSDSchemaInfo {
-        return try RSDSchemaInfoObject(from: decoder)
-    }
-    
-    /// Encode the schema info from the given task result to the given encoder. This allows a subclass
-    /// of the factory to encode additional schema information to the schema info defined by the
-    /// `RSDSchemaInfo` protocol.
-    ///
-    /// - parameters:
-    ///     - taskResult: The task result being encoded.
-    ///     - encoder: The nested encoder to encode the schema info to.
-    @available(*, deprecated, message: "Implement `AssessmentResult` instead")
-    open func encodeSchemaInfo(from taskResult: RSDTaskRunResult, to encoder: Encoder) throws {
-        if let schema = taskResult.schemaInfo, let encodableSchema = schema as? Encodable {
-            try encodableSchema.encode(to: encoder)
-        } else {
-            let encodableSchema = RSDSchemaInfoObject(identifier: taskResult.schemaInfo?.schemaIdentifier ?? taskResult.identifier,
-                                                      revision: taskResult.schemaInfo?.schemaVersion ?? 1)
-            try encodableSchema.encode(to: encoder)
-        }
-    }
-    
     
     // MARK: Task Transformer factory
     
@@ -404,6 +357,3 @@ extension Encoder {
     }
 }
 
-open class RSDAbstractPolymorphicSerializer : AbstractPolymorphicSerializer {
-    
-}

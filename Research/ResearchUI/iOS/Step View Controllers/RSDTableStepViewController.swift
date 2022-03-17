@@ -34,7 +34,7 @@
 
 import UIKit
 import Research
-
+import AssessmentModel
 
 /// `RSDTableStepViewController` is a custom instance of `RSDStepViewController`. Its subviews include a
 /// `UITableView`, a `RSDNavigationFooterView`, which may or may not be embedded in the tableView as its
@@ -70,8 +70,8 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
     }
     
     /// Convenience property for accessing the question step.
-    public var questionStep: QuestionStep? {
-        return step as? QuestionStep
+    public var questionStep: RSDQuestionStep? {
+        return step as? RSDQuestionStep
     }
 
     /// Static method to determine if this view controller class supports the provided step.

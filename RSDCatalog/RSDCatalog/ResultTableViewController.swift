@@ -35,6 +35,7 @@ import UIKit
 import ResearchUI
 import JsonModel
 import Research
+import AssessmentModel
 
 class ResultTableViewController: UITableViewController {
 
@@ -45,7 +46,7 @@ class ResultTableViewController: UITableViewController {
     func results(in section: Int) -> [ResultData] {
         if let collectionResult = result as? CollectionResult {
             return collectionResult.children
-        } else if let taskResult = result as? RSDTaskResult {
+        } else if let taskResult = result as? BranchNodeResult {
             if section == 0 {
                 return taskResult.stepHistory
             } else {
@@ -59,7 +60,7 @@ class ResultTableViewController: UITableViewController {
     override func numberOfSections(in tableView: UITableView) -> Int {
         if let _ = result as? CollectionResult {
             return 1
-        } else if let taskResult = result as? RSDTaskResult {
+        } else if let taskResult = result as? BranchNodeResult {
             return (taskResult.asyncResults?.count ?? 0) > 0 ? 2 : 1
         } else {
             return 0
@@ -89,7 +90,7 @@ class ResultTableViewController: UITableViewController {
             cell = tableView.dequeueReusableCell(withIdentifier: ReuseIdentifier.file.stringValue, for: indexPath) as! ImageTableViewCell
             cell.subtitleLabel?.text = fileResult.url != nil ? String(describing: fileResult.url!.lastPathComponent) : "nil"
         }
-        else if (result is CollectionResult) || (result is RSDTaskResult) {
+        else if (result is CollectionResult) || (result is BranchNodeResult) {
             cell = tableView.dequeueReusableCell(withIdentifier: ReuseIdentifier.section.stringValue, for: indexPath) as! ImageTableViewCell
         }
         else if let errorResult = result as? ErrorResult {

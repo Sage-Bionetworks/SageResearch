@@ -33,6 +33,7 @@
 
 import Foundation
 import JsonModel
+import AssessmentModel
 
 /// The study configuration is intended as a shared singleton that contains any information that should be
 /// applied to the entire study that may effect the presentation of a given module.

@@ -33,6 +33,7 @@
 
 import Foundation
 import JsonModel
+import AssessmentModel
 
 public protocol InputItemState : AnyObject {
     var identifier: String { get }
@@ -51,6 +52,45 @@ open class AbstractInputItemTableItem : RSDTableItem {
         let identifier = (rowIndex == 0) ? questionIdentifier : "\(questionIdentifier).\(rowIndex)"
         let hint = inputItem.inputUIHint.bestHint(from: supportedHints)
         super.init(identifier: identifier, rowIndex: rowIndex, reuseIdentifier: hint.rawValue)
+    }
+}
+
+extension InputItem {
+    var inputUIHint: RSDFormUIHint {
+        (self is ChoiceInputItem) ? .list : .textfield
+    }
+    
+    var isExclusive: Bool {
+        (self as? ChoiceInputItem).map { $0.selectorType == .exclusive } ?? false
+    }
+}
+
+struct ChoiceWrapper : RSDChoice {
+    let choiceItem : ChoiceInputItem
+    
+    var answerValue: Codable? {
+        choiceItem.jsonElement(selected: true)
+    }
+    
+    var text: String? {
+        choiceItem.label
+    }
+    
+    var detail: String? {
+        choiceItem.detail
+    }
+    
+    var isExclusive: Bool {
+        choiceItem.selectorType == .exclusive
+    }
+    
+    var imageData: RSDImageData? {
+        nil
+    }
+    
+    func isEqualToResult(_ result: ResultData?) -> Bool {
+        guard let answer = result as? AnswerResult else { return false }
+        return answer.jsonValue == choiceItem.jsonElement(selected: true)
     }
 }
 
@@ -73,10 +113,11 @@ open class ChoiceInputItemTableItem : AbstractInputItemTableItem, InputItemState
         inputItem as! ChoiceInputItem
     }
     
-    public var choice: RSDChoice { choiceItem }
+    public var choice: RSDChoice { _wrapper }
+    private let _wrapper: ChoiceWrapper
     
     public init(questionIdentifier: String, rowIndex: Int, choiceItem: ChoiceInputItem, initialAnswer: JsonElement?, supportedHints: Set<RSDFormUIHint>?) {
-
+        self._wrapper = .init(choiceItem: choiceItem)
         self.selected = initialAnswer.map { jsonValue in
             if case .array(let arr) = jsonValue {
                 if let selectedValue = choiceItem.jsonElement(selected: true), selectedValue != .null {
@@ -98,23 +139,23 @@ open class ChoiceInputItemTableItem : AbstractInputItemTableItem, InputItemState
 open class TextInputItemTableItem : AbstractInputItemTableItem, InputItemState, TextInputItemState {
     public private(set) var storedAnswer: JsonElement?
     public var selected: Bool
-    public let textValidator: TextInputValidator
+    public let textValidator: TextEntryValidator
     public let pickerSource: RSDPickerDataSource?
     
-    public var textItem: KeyboardTextInputItem {
-        inputItem as! KeyboardTextInputItem
+    public var textItem: TextInputItem {
+        inputItem as! TextInputItem
     }
     
     public init(questionIdentifier: String,
                 rowIndex: Int,
-                textItem: KeyboardTextInputItem,
+                textItem: TextInputItem,
                 initialAnswer: JsonElement?,
                 supportedHints: Set<RSDFormUIHint>?) {
         let storedAnswer = (initialAnswer != .null) ? initialAnswer : nil
         self.storedAnswer = storedAnswer
         self.selected = (storedAnswer != nil)
         self.textValidator = textItem.buildTextValidator()
-        self.pickerSource = textItem.buildPickerSource()
+        self.pickerSource = nil // textItem.buildPickerSource() syoung 03/14/2022 Re-implement
         super.init(questionIdentifier: questionIdentifier, rowIndex: rowIndex, inputItem: textItem, supportedHints: supportedHints)
     }
     
@@ -151,6 +192,6 @@ open class TextInputItemTableItem : AbstractInputItemTableItem, InputItemState, 
     }
     
     public func answerText(for answer: Any?) -> String? {
-        pickerSource.map { $0.textAnswer(from: answer) ?? "" } ?? textValidator.answerText(for: answer)
+        pickerSource.map { $0.textAnswer(from: answer) ?? "" } ?? textValidator.localizedText(for: answer as? JsonValue)
     }
 }

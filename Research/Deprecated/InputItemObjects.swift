@@ -33,6 +33,7 @@
 
 import Foundation
 import JsonModel
+import AssessmentModel
 import Formatters
 
 public final class InputItemSerializer : AbstractPolymorphicSerializer, PolymorphicSerializer {
@@ -490,7 +491,7 @@ public final class StringTextInputItemObject : AbstractInputItemObject, Serializ
         try container.encodeIfPresent(self.keyboardOptionsObject, forKey: .keyboardOptions)
     }
 
-    public func buildTextValidator() -> TextInputValidator {
+    public func buildTextValidator() -> TextEntryValidator {
         regExValidator ?? PassThruValidator()
     }
     
@@ -971,7 +972,7 @@ extension HeightInputItemBuilderObject : DocumentableStruct {
 /// Use a wrapper for the height to allow the app to vend a different formatter depending upon
 /// whether or not the participant is using metric and to wrap the input item for use by BridgeSDK
 /// model objects.
-public struct HeightInputItemObject : KeyboardTextInputItem, TextInputValidator {
+public struct HeightInputItemObject : KeyboardTextInputItem, TextEntryValidator {
 
     public let identifier: String?
     public let fieldLabel: String?
@@ -1015,7 +1016,7 @@ public struct HeightInputItemObject : KeyboardTextInputItem, TextInputValidator 
         self.inputUIHint = (measurementSize == .adult) && !Locale.current.usesMetricSystem ? .picker : .textfield
     }
 
-    public func buildTextValidator() -> TextInputValidator { self }
+    public func buildTextValidator() -> TextEntryValidator { self }
     
     public func buildPickerSource() -> RSDPickerDataSource? {
         guard inputUIHint == .picker else { return nil }
@@ -1023,7 +1024,7 @@ public struct HeightInputItemObject : KeyboardTextInputItem, TextInputValidator 
     }
 }
 
-extension HeightInputItemObject : MeasurementTextInputValidator {
+extension HeightInputItemObject : MeasurementTextEntryValidator {
     var measurementFormatter: MeasurementFormatter { lengthFormatter }
 }
 
@@ -1052,7 +1053,7 @@ extension WeightInputItemBuilderObject : DocumentableStruct {
 /// Use a wrapper for the height to allow the app to vend a different formatter depending upon
 /// whether or not the participant is using metric and to wrap the input item for use by BridgeSDK
 /// model objects.
-public struct WeightInputItemObject : KeyboardTextInputItem, TextInputValidator {
+public struct WeightInputItemObject : KeyboardTextInputItem, TextEntryValidator {
 
     public let identifier: String?
     public let fieldLabel: String?
@@ -1096,7 +1097,7 @@ public struct WeightInputItemObject : KeyboardTextInputItem, TextInputValidator 
         self.inputUIHint = (measurementSize == .infant) && !Locale.current.usesMetricSystem ? .picker : .textfield
     }
 
-    public func buildTextValidator() -> TextInputValidator { self }
+    public func buildTextValidator() -> TextEntryValidator { self }
     
     public func buildPickerSource() -> RSDPickerDataSource? {
         guard inputUIHint == .picker else { return nil }
@@ -1104,7 +1105,7 @@ public struct WeightInputItemObject : KeyboardTextInputItem, TextInputValidator 
     }
 }
 
-extension WeightInputItemObject : MeasurementTextInputValidator {
+extension WeightInputItemObject : MeasurementTextEntryValidator {
     var measurementFormatter: MeasurementFormatter { massFormatter }
 }
 

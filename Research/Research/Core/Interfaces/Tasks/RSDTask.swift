@@ -33,12 +33,13 @@
 
 import Foundation
 import MobilePassiveData
+import AssessmentModel
 
 /// `RSDTask` is the interface for running a task. It includes information about how to calculate progress,
 /// validation, and the order of display for the steps.
 ///
 /// - seealso: `RSDTaskController` and `RSDTaskInfoStep`
-public protocol RSDTask {
+public protocol RSDTask : BranchNode {
     
     /// A short string that uniquely identifies the task.
     var identifier: String { get }
@@ -77,6 +78,20 @@ extension RSDTask {
         return actions.filter {
             ($0.startStepIdentifier == step.identifier) || ($0.startStepIdentifier == nil && isFirstStep)
         }
+    }
+}
+
+public protocol RSDSageResearchTask : RSDTask {
+}
+
+extension RSDSageResearchTask {
+    
+    public func instantiateNavigator(state: NavigationState) -> Navigator {
+        RSDStepNavigationWrapper(self.stepNavigator)
+    }
+    
+    public func instantiateBranchNodeResult() -> BranchNodeResult {
+        instantiateTaskResult()
     }
 }
 

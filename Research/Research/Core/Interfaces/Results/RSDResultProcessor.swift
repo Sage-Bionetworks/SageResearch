@@ -32,6 +32,7 @@
 //
 
 import Foundation
+import AssessmentModel
 
 /// This is a hook to allow custom post-processing of the results. Typically, it is recommended that
 /// Assessment creators should processs results as a part of navigation, using a custom

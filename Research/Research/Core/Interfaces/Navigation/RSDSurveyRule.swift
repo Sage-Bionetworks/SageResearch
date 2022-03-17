@@ -33,6 +33,7 @@
 
 import JsonModel
 import Foundation
+import AssessmentModel
 
 /// `RSDSurveyRule` defines an evaluation rule and returns a step identifier if appropriate.
 public protocol RSDSurveyRule {

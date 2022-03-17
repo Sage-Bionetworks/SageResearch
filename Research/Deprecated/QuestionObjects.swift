@@ -33,6 +33,7 @@
 
 import Foundation
 import JsonModel
+import AssessmentModel
 
 // TODO: syoung 04/06/2020 Implement ComboBoxQuestionObject supported in Kotlin frameworks
 
@@ -79,7 +80,7 @@ open class AbstractQuestionStep : RSDUIStepObject, SurveyRuleNavigation, RSDCoho
     /// - returns: A result for this step.
     open override func instantiateStepResult() -> ResultData {
         guard let question = self as? QuestionStep else {
-            return RSDResultObject(identifier: self.identifier)
+            return ResultObject(identifier: self.identifier)
         }
         return AnswerResultObject(identifier: self.identifier,
                                   answerType: question.answerType,

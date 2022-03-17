@@ -2,7 +2,7 @@
 //  RSDTaskResultObject.swift
 //  Research
 //
-//  Copyright © 2017 Sage Bionetworks. All rights reserved.
+//  Copyright © 2017-2022 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -33,6 +33,7 @@
 
 import Foundation
 import JsonModel
+import AssessmentModel
 
 /// `RSDTaskResultObject` is a result associated with a task. This object includes a step history, task run UUID,
 /// schema identifier, and asynchronous results.
@@ -41,62 +42,57 @@ public final class RSDTaskResultObject : AbstractAssessmentResultObject, Seriali
     public override class func defaultType() -> SerializableResultType {
         .task
     }
+
+    private enum CodingKeys : String, OrderedEnumCodingKey {
+        case nodePath
+    }
+    
+    /// Default initializer for this object.
+    ///
+    /// - parameters:
+    ///     - identifier: The identifier string.
+    ///     - schemaInfo: The schemaInfo associated with this task result. Default = `nil`.
+    public init(identifier: String,
+                versionString: String? = nil,
+                assessmentIdentifier: String? = nil,
+                schemaIdentifier: String? = nil) {
+        super.init(identifier: identifier, versionString: versionString, assessmentIdentifier: assessmentIdentifier, schemaIdentifier: schemaIdentifier)
+    }
+    
+    /// Initialize from a `Decoder`. This decoding method will use the `RSDFactory` instance associated
+    /// with the decoder to decode the `stepHistory`, `asyncResults`, and `schemaInfo`.
+    ///
+    /// - parameter decoder: The decoder to use to decode this instance.
+    /// - throws: `DecodingError`
+    public required init(from decoder: Decoder) throws {
+        try super.init(from: decoder)
+        guard path.isEmpty else { return }
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        if let nodePath = try container.decodeIfPresent([String].self, forKey: .nodePath) {
+            self.path = nodePath.map { .init(identifier: $0, direction: .forward) }
+        }
+    }
+    
+    /// Encode the result to the given encoder.
+    /// - parameter encoder: The encoder to use to encode this instance.
+    /// - throws: `EncodingError`
+    public override func encode(to encoder: Encoder) throws {
+        try super.encode(to: encoder)
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(path.map { $0.identifier }, forKey: .nodePath)
+    }
     
     public func deepCopy() -> RSDTaskResultObject {
-        var copy = RSDTaskResultObject(identifier: self.identifier,
+        let copy = type(of: self).init(identifier: self.identifier,
                                        versionString: self.versionString,
                                        assessmentIdentifier: self.assessmentIdentifier,
                                        schemaIdentifier: self.schemaIdentifier)
-        copy.startDate = self.startDate
-        copy.endDate = self.endDate
+        copy.startDateTime = self.startDateTime
+        copy.endDateTime = self.endDateTime
         copy.taskRunUUID = self.taskRunUUID
         copy.stepHistory = self.stepHistory.map { $0.deepCopy() }
         copy.asyncResults = self.asyncResults?.map { $0.deepCopy() }
-        copy.nodePath = self.nodePath
+        copy.path = self.path
         return copy
-    }
-}
-
-extension RSDTaskResultObject : DocumentableRootObject {
-    
-    public convenience init() {
-        self.init(identifier: "example")
-    }
-    
-    public var jsonSchema: URL {
-        URL(string: "\(RSDFactory.shared.modelName(for: self.className)).json", relativeTo: kSageJsonSchemaBaseURL)!
-    }
-    
-    public var documentDescription: String? {
-        "A top-level result for this assessment."
-    }
-}
-
-extension RSDTaskResultObject : DocumentableStruct {
-
-    public static func examples() -> [RSDTaskResultObject] {
-        
-        var result = RSDTaskResultObject(identifier: "example")
-        
-        var introStepResult = RSDResultObject(identifier: "introduction")
-        introStepResult.startDate = ISO8601TimestampFormatter.date(from: "2017-10-16T22:28:09.000-07:00")!
-        introStepResult.endDate = introStepResult.startDate.addingTimeInterval(20)
-        let collectionResult = RSDCollectionResultObject.examples().first!
-        collectionResult.startDate = introStepResult.endDate
-        collectionResult.endDate = collectionResult.startDate.addingTimeInterval(2 * 60)
-        var conclusionStepResult = RSDResultObject(identifier: "conclusion")
-        conclusionStepResult.startDate = collectionResult.endDate
-        conclusionStepResult.endDate = conclusionStepResult.startDate.addingTimeInterval(20)
-        result.stepHistory = [introStepResult, collectionResult, conclusionStepResult]
-        
-        var fileResult = FileResultObject.examples().first!
-        fileResult.startDate = collectionResult.startDate
-        fileResult.endDate = collectionResult.endDate
-        result.asyncResults = [fileResult]
-        
-        result.startDate = introStepResult.startDate
-        result.endDate = conclusionStepResult.endDate
-        
-        return [result]
     }
 }

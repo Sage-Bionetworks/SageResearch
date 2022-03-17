@@ -33,6 +33,7 @@
 
 import JsonModel
 import Foundation
+import AssessmentModel
 
 /// A result that can be used to track a custom navigation as a result of user action.
 public protocol RSDNavigationResult : ResultData {

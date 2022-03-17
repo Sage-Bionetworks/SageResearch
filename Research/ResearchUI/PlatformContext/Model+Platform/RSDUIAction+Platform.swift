@@ -38,6 +38,7 @@ import UIKit
 #endif
 
 import Research
+import AssessmentModel
 
 extension RSDUIAction {
     

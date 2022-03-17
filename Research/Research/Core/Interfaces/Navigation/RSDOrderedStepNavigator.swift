@@ -32,6 +32,7 @@
 //
 
 import Foundation
+import AssessmentModel
 
 
 /// Implementation of a step navigator that will apply conditions and navigation based on the steps,
