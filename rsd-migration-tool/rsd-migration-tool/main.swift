@@ -149,6 +149,8 @@ let keywords = [
     Keyword(library: .assessmentModel, find: "FileResult", replace: nil),
     Keyword(library: .assessmentModel, find: "ErrorResult", replace: nil),
     Keyword(library: .assessmentModel, find: "SerializableResultType", replace: nil),
+    Keyword(library: .assessmentModel, find: "PermissionType", replace: nil),
+    Keyword(library: .assessmentModel, find: "AsyncActionConfiguration", replace: nil),
     
     Keyword(library: .assessmentModel, find: "RSDCollectionResultObject", replace: "CollectionResultObject"),
     Keyword(library: .assessmentModel, find: "RSDResultObject", replace: "ResultObject"),

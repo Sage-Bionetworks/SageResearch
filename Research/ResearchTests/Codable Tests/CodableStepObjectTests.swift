@@ -414,7 +414,7 @@ class CodableStepObjectTests: XCTestCase {
                                     "skipToIdentifier": "boo"}
                         },
             "shouldHideActions": ["goBackward", "skip"],
-            "permissions" : [{ "permissionType": "location", "reason": "How far you will go!"}]
+            "permissions" : [{ "permissionType": "location"}]
         }
         """.data(using: .utf8)! // our data in native (JSON) format
         
@@ -452,7 +452,6 @@ class CodableStepObjectTests: XCTestCase {
             XCTAssertTrue(object.shouldHideAction(for: .navigation(.goBackward), on: object) ?? false)
             
             if let permission = object.standardPermissions?.first {
-                XCTAssertEqual(permission.reason, "How far you will go!")
                 XCTAssertEqual(permission.permissionType, .location)
             }
             

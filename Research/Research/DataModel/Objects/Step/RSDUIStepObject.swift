@@ -157,6 +157,10 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDDesignableUIStep, RSDT
         }
     }
     
+    open func spokenInstruction(at timeInterval: TimeInterval) -> String? {
+        nil
+    }
+    
     /// Default initializer.
     /// - parameters:
     ///     - identifier: A short string that uniquely identifies the step.

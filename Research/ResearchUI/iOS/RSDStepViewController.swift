@@ -817,11 +817,7 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
     /// Show an alert to the user to let them know that authorization has failed.
     open func handleAuthorizationFailed(status: PermissionAuthorizationStatus, permission: StandardPermission) {
 
-        let settingsMessage = (status == .restricted) ? permission.restrictedMessage : permission.deniedMessage
-        let message: String = {
-            guard let reason = permission.reason else { return settingsMessage }
-            return "\(reason)\n\n\(settingsMessage)"
-        }()
+        let message = (status == .restricted) ? permission.restrictedMessage : permission.deniedMessage
         let title = Localization.localizedString("NOT_AUTHORIZED")
         
         var actions = [UIAlertAction]()
@@ -839,7 +835,7 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
         }
         actions.append(okAction)
         
-        self.presentAlertWithActions(title: title, message: message, preferredStyle: .alert, actions: actions)
+        self.presentAlertWithActions(title: title, message: message ?? title, preferredStyle: .alert, actions: actions)
     }
     
     /// The authorization status for this view controller.
@@ -857,13 +853,13 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
     }
     
     /// Check the authorization status for a given permission type.
-    open func authorizationStatus(for permissionType: StandardPermissionType) -> PermissionAuthorizationStatus {
-        return PermissionAuthorizationHandler.authorizationStatus(for: permissionType.identifier)
+    open func authorizationStatus(for permissionType: PermissionType) -> PermissionAuthorizationStatus {
+        return PermissionAuthorizationHandler.authorizationStatus(for: permissionType.name)
     }
     
     /// The permissions required for this step.
     open func requiredPermissions() -> [StandardPermission]? {
-        return (self.step as? StandardPermissionsStep)?.standardPermissions?.filter { !$0.isOptional }
+        return (self.step as? StandardPermissionsStep)?.standardPermissions?.filter { !$0.optional }
     }
     
     /// The permissions that are requested as a part of this step.

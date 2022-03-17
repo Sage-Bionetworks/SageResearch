@@ -95,7 +95,7 @@ open class RSDInstructionStepObject : RSDUIStepObject, RSDInstructionStep, Encod
     ///
     /// - parameter timeInterval: The time interval at which to speak the instruction.
     /// - returns: The localized instruction to speak or `nil` if there isn't an instruction.
-    open func spokenInstruction(at timeInterval: TimeInterval) -> String? {
+    open override func spokenInstruction(at timeInterval: TimeInterval) -> String? {
         guard let key = SpokenInstructionKey(timeInterval: timeInterval) else { return nil }
         return self.spokenInstructions?[key]
     }

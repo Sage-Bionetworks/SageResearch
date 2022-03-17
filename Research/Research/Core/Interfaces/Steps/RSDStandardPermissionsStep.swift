@@ -33,11 +33,12 @@
 
 import Foundation
 import MobilePassiveData
+import AssessmentModel
 
 /// `PermissionsStep` extends the `RSDUIStep` to include information about an activity including
 /// what permissions are required by this step or task. Without these preconditions, the task cannot
 /// measure or collect the data needed for this task.
-public protocol StandardPermissionsStep : RSDStep, PermissionsConfiguration {
+public protocol StandardPermissionsStep : RSDStep, PermissionStep {
     
     /// The permissions used by this task.
     var standardPermissions: [StandardPermission]? { get }
@@ -46,7 +47,5 @@ public protocol StandardPermissionsStep : RSDStep, PermissionsConfiguration {
 extension StandardPermissionsStep {
     
     /// List of the permissions required for this action.
-    public var permissionTypes: [PermissionType] {
-        return standardPermissions?.map { $0.permissionType } ?? []
-    }
+    public var permissions: [PermissionInfo] { standardPermissions ?? [] }
 }

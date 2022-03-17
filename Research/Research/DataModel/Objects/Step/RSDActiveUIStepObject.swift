@@ -127,7 +127,7 @@ open class RSDActiveUIStepObject : RSDUIStepObject, RSDActiveUIStep {
     ///
     /// - parameter timeInterval: The time interval at which to speak the instruction.
     /// - returns: The localized instruction to speak or `nil` if there isn't an instruction.
-    open func spokenInstruction(at timeInterval: TimeInterval) -> String? {
+    open override func spokenInstruction(at timeInterval: TimeInterval) -> String? {
         var key = timeInterval
         if timeInterval >= duration && duration > 0 {
             key = Double.infinity

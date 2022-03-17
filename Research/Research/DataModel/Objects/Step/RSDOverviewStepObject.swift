@@ -94,10 +94,6 @@ open class RSDOverviewStepObject : RSDUIStepObject, RSDOverviewStep, Encodable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(self.icons, forKey: .icons)
     }
-    
-    public func spokenInstruction(at timeInterval: TimeInterval) -> String? {
-        nil
-    }
 
     // Overrides must be defined in the base implementation
     

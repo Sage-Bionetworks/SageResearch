@@ -5,5 +5,5 @@
 "optional": false,
 "inputItem":{"type" : "year"},
 "skipCheckbox":{"type":"skipCheckbox","fieldLabel":"No answer"},
-"surveyRules": [{ "matchingAnswer": 1900}]
+"surveyRules": [{ "matchingAnswer": 1900, "skipToIdentifier": "exit"}]
 }

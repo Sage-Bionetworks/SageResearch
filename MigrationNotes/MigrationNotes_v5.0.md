@@ -45,3 +45,12 @@ implement missing requirements.
 Note: `RSDTaskResultObject` is included as a top-level result to maintain the serialization "type"
 key that has been used on iOS of "task", while changing the top-level result "type" key to "assessment"
 to match the existing Kotlin implementation.
+
+## Refactored Permissions and Async Actions
+
+Refactored permissions and moved the protocol for `AsyncActionConfiguration` from MobilePassiveData
+to AssessmentModel.
+
+## Refactored Survey Rules
+
+Refactored navigation based on question survey rules and moved to AssessmentModel.

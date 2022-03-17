@@ -127,7 +127,7 @@ open class PermissionStepViewController: RSDStepViewController {
         
         self.requestPermissions(requests) { [weak self] (status, permission) in
             DispatchQueue.main.async {
-                if status.isDenied(), !(permission?.isOptional ?? false) {
+                if status.isDenied(), !(permission?.optional ?? false) {
                     self?.handleAuthorizationFailed(status: status, permission: permission!)
                 } else {
                     self?._super_goForward()

@@ -49,6 +49,14 @@ extension AbstractNodeObject : RSDUIActionHandler {
     }
 }
 
+extension AbstractNodeObject : RSDNavigationRule {
+    public func nextStepIdentifier(with result: RSDTaskResult?, isPeeking: Bool) -> String? {
+        result.flatMap {
+            self.nextNodeIdentifier(branchResult: $0, isPeeking: isPeeking)?.rawValue
+        }
+    }
+}
+
 public extension ButtonType {
     var actionType: RSDUIActionType {
         .init(rawValue: self.rawValue)

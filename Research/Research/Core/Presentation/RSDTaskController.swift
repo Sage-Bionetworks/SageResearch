@@ -33,6 +33,7 @@
 
 import Foundation
 import MobilePassiveData
+import AssessmentModel
 
 /// The direction of navigation for the steps.
 public enum RSDStepDirection : Int, Codable {

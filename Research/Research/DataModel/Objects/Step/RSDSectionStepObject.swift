@@ -224,7 +224,7 @@ extension RSDSectionStepObject : DocumentableObject {
         case .stepType:
             return .init(constValue: RSDStepType.section)
         case .steps:
-            return .init(propertyType: .interfaceArray("\(RSDStep.self)"))
+            return .init(propertyType: .interfaceArray("\(Node.self)"))
         case .progressMarkers:
             return .init(propertyType: .primitiveArray(.string))
         case .asyncActions:

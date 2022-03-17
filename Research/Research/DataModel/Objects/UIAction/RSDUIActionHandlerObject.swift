@@ -170,7 +170,7 @@ open class RSDUIActionHandlerObject : RSDUIActionHandler {
         }
         switch key {
         case .actions:
-            return DocumentProperty(propertyType: .interfaceDictionary("\(RSDUIAction.self)"))
+            return DocumentProperty(propertyType: .interfaceDictionary("\(ButtonActionInfo.self)"))
         case .shouldHideActions:
             return DocumentProperty(propertyType: .referenceArray(RSDUIActionType.documentableType()))
         }

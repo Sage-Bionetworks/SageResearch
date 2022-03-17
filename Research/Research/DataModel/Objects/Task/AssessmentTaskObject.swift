@@ -171,7 +171,6 @@ open class AbstractTaskObject : RSDUIActionHandlerObject, RSDCopyTask, RSDTracki
     
     open func validate() throws {
         try steps.forEach { try $0.validate() }
-        try asyncActions?.forEach { try $0.validate() }
     }
     
     // MARK: Initialization
@@ -392,7 +391,7 @@ open class AbstractTaskObject : RSDUIActionHandlerObject, RSDCopyTask, RSDTracki
         case .taskType:
             return .init(constValue: defaultType())
         case .steps:
-            return .init(propertyType: .interfaceArray("\(RSDStep.self)"))
+            return .init(propertyType: .interfaceArray("\(Node.self)"))
         case .progressMarkers:
             return .init(propertyType: .primitiveArray(.string))
         case .asyncActions:

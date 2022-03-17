@@ -33,6 +33,7 @@
 
 import Foundation
 import JsonModel
+import AssessmentModel
 
 /// `RSDConditionalStepNavigatorObject` is a concrete implementation of the `RSDConditionalStepNavigator` protocol.
 public struct RSDConditionalStepNavigatorObject : RSDConditionalStepNavigator, RSDCopyStepNavigator, Decodable {
@@ -171,7 +172,7 @@ extension RSDConditionalStepNavigatorObject : DocumentableObject {
         }
         switch key {
         case .steps:
-            return .init(propertyType: .interfaceArray("\(RSDStep.self)"))
+            return .init(propertyType: .interfaceArray("\(Node.self)"))
         case .progressMarkers:
             return .init(propertyType: .primitiveArray(.string))
         case .insertAfterIdentifier:
