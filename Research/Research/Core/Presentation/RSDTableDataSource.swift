@@ -32,6 +32,7 @@
 //
 
 import Foundation
+import AssessmentModel
 
 public enum RSDUIRowAnimation : Int {
     case fade, right, left, top, bottom, none, middle, automatic

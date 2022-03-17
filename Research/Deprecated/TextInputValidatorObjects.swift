@@ -1,5 +1,5 @@
 //
-//  TextInputValidatorObjects.swift
+//  TextEntryValidatorObjects.swift
 //  Research
 //
 //  Copyright © 2017-2020 Sage Bionetworks. All rights reserved.
@@ -33,9 +33,10 @@
 
 import Foundation
 import JsonModel
+import AssessmentModel
 import Formatters
 
-public struct PassThruValidator : TextInputValidator {
+public struct PassThruValidator : TextEntryValidator {
     public init() {}
     public func answerText(for answer: Any?) -> String? {
         let value = (answer as? JsonElement).map { $0 != .null ? $0.jsonObject() : nil } ?? answer
@@ -45,23 +46,23 @@ public struct PassThruValidator : TextInputValidator {
     public func validateInput(text: String?) throws -> Any? { text }
 }
 
-public struct RegExValidator : TextInputValidator, Codable {
+public struct RegExValidator : TextEntryValidator, Codable {
     private enum CodingKeys : String, CodingKey, CaseIterable {
         case pattern, invalidMessage
     }
-    
+
     let pattern: NSRegularExpression
     let invalidMessage: String
-    
+
     public init(pattern: NSRegularExpression, invalidMessage: String) {
         self.pattern = pattern
         self.invalidMessage = invalidMessage
     }
-    
+
     public func answerText(for answer: Any?) -> String? {
         answer.map { "\($0)" }
     }
-    
+
     public func validateInput(text: String?) throws -> Any? {
         guard _regExMatches(text) == 1 else {
             let context = RSDInputFieldError.Context(identifier: nil, value: text, debugDescription: invalidMessage)
@@ -69,25 +70,25 @@ public struct RegExValidator : TextInputValidator, Codable {
         }
         return text
     }
-    
+
     public func validateInput(answer: Any?) throws -> Any? {
         try answer.map { try validateInput(text: "\($0)") } ?? nil
     }
-    
+
     private func _regExMatches(_ text: String?) -> Int {
         guard let string = text else { return 0 }
         return pattern.numberOfMatches(in: string, options: [], range: NSRange(string.startIndex..., in: string))
     }
-    
+
     // MARK: Codable
-    
+
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let pattern = try container.decode(String.self, forKey: .pattern)
         self.pattern = try NSRegularExpression(pattern: pattern, options: [])
         self.invalidMessage = try container.decode(String.self, forKey: .invalidMessage)
     }
-    
+
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(self.pattern.pattern, forKey: .pattern)
@@ -99,9 +100,9 @@ extension RegExValidator : DocumentableStruct {
     public static func codingKeys() -> [CodingKey] {
         CodingKeys.allCases
     }
-    
+
     public static func isRequired(_ codingKey: CodingKey) -> Bool { true }
-    
+
     public static func documentProperty(for codingKey: CodingKey) throws -> DocumentProperty {
         guard let key = codingKey as? CodingKeys else {
             throw DocumentableError.invalidCodingKey(codingKey, "\(codingKey) is not recognized for this class")
@@ -113,7 +114,7 @@ extension RegExValidator : DocumentableStruct {
             return .init(propertyType: .primitive(.string))
         }
     }
-    
+
     public static func examples() -> [RegExValidator] {
         let pattern = try! NSRegularExpression(pattern: "^[0-9]*$", options: [])
         return [RegExValidator(pattern: pattern, invalidMessage: "Only entering numbers is allowed.")]
@@ -124,7 +125,7 @@ extension RegExValidator : DocumentableStruct {
 /// `Codable` string enum for the number formatter.
 public enum NumberFormatStyle : String, Codable, CaseIterable {
     case none, decimal, currency, percent, scientific, spellOut, ordinal
-    
+
     public func formatterStyle() -> NumberFormatter.Style {
         guard let idx = NumberFormatStyle.allCases.firstIndex(of: self),
             let style = NumberFormatter.Style(rawValue: UInt(idx))
@@ -138,27 +139,27 @@ public enum NumberFormatStyle : String, Codable, CaseIterable {
 extension NumberFormatStyle : StringEnumSet, DocumentableStringEnum {
 }
 
-public protocol NumberValidator : TextInputValidator {
+public protocol NumberValidator : TextEntryValidator {
     associatedtype Value : JsonNumber
-    
+
     var numberStyle: NumberFormatStyle! { get }
     var usesGroupingSeparator: Bool! { get }
     var maximumFractionDigits: Int! { get }
-    
+
     var minimumValue: Value? { get }
     var maximumValue: Value? { get }
     var stepInterval: Value? { get }
-    
+
     // TODO: syoung 04/03/2020 Implement Localization strategy
     var minInvalidMessage: String? { get }
     var maxInvalidMessage: String? { get }
     var invalidMessage: String? { get }
-    
+
     func convertToValue(from number: NSNumber) -> Value
 }
 
 public extension NumberValidator {
-    
+
     var formatter : NumberFormatter {
         let formatter = NumberFormatter()
         formatter.usesGroupingSeparator = self.usesGroupingSeparator
@@ -166,16 +167,16 @@ public extension NumberValidator {
         formatter.maximumFractionDigits = self.maximumFractionDigits
         return formatter
     }
-    
+
     var defaultInvalidMessage : String {
         invalidMessage ?? Localization.localizedString("The number entered is not valid.")
     }
-    
+
     func answerText(for answer: Any?) -> String? {
         guard let num = (answer as? JsonNumber)?.jsonNumber() else { return nil }
         return self.formatter.string(from: num)
     }
-    
+
     func validateInput(answer: Any?) throws -> Any? {
         guard let answer = answer else { return nil }
         if let str = answer as? String {
@@ -189,7 +190,7 @@ public extension NumberValidator {
             throw RSDInputFieldError.invalidType(context)
         }
     }
-    
+
     func validateInput(text: String?) throws -> Any? {
         guard let str = text, let num = self.formatter.number(from: str) else {
             try validateNil()
@@ -197,7 +198,7 @@ public extension NumberValidator {
         }
         return try validateNumber(num)
     }
-    
+
     func validateNumber(_ num: NSNumber) throws -> Any? {
         if let min = self.minimumValue?.jsonNumber(), num.decimalValue < min.decimalValue {
             let message = self.minInvalidMessage ?? defaultInvalidMessage
@@ -211,7 +212,7 @@ public extension NumberValidator {
         }
         return convertToValue(from: num)
     }
-    
+
     func validateNil() throws {
         guard minimumValue == nil && maximumValue == nil else {
             let context = RSDInputFieldError.Context(identifier: nil, value: nil, debugDescription: self.defaultInvalidMessage)
@@ -222,40 +223,40 @@ public extension NumberValidator {
 
 public struct IntegerFormatOptions : Codable, NumberValidator {
     public typealias Value = Int
-    
+
     private enum CodingKeys : String, CodingKey, CaseIterable {
         case _numberStyle = "numberStyle",
         _usesGroupingSeparator = "usesGroupingSeparator",
         minimumValue, maximumValue, stepInterval,
         minInvalidMessage, maxInvalidMessage, invalidMessage
     }
-    
+
     public var numberStyle: NumberFormatStyle! {
         get { _numberStyle ?? NumberFormatStyle.none }
         set(newValue) { _numberStyle = newValue }
     }
     private var _numberStyle: NumberFormatStyle?
-    
+
     public var usesGroupingSeparator: Bool! {
         get { _usesGroupingSeparator ?? true }
         set(newValue) { _usesGroupingSeparator = newValue }
     }
     private var _usesGroupingSeparator: Bool?
-    
+
     public var maximumFractionDigits: Int! { 0 }
-    
+
     public var minimumValue: Int?
     public var maximumValue: Int?
     public var stepInterval: Int?
-    
+
     public var minInvalidMessage: String?
     public var maxInvalidMessage: String?
     public var invalidMessage: String?
-    
+
     public func convertToValue(from number: NSNumber) -> Int {
         number.intValue
     }
-    
+
     public init() {
     }
 }
@@ -264,9 +265,9 @@ extension IntegerFormatOptions : DocumentableStruct {
     public static func codingKeys() -> [CodingKey] {
         CodingKeys.allCases
     }
-    
+
     public static func isRequired(_ codingKey: CodingKey) -> Bool { false }
-    
+
     public static func documentProperty(for codingKey: CodingKey) throws -> DocumentProperty {
         guard let key = codingKey as? CodingKeys else {
             throw DocumentableError.invalidCodingKey(codingKey, "\(codingKey) is not recognized for this class")
@@ -282,7 +283,7 @@ extension IntegerFormatOptions : DocumentableStruct {
             return .init(propertyType: .primitive(.string))
         }
     }
-    
+
     public static func examples() -> [IntegerFormatOptions] {
         let exA = IntegerFormatOptions()
         var exB = IntegerFormatOptions()
@@ -300,7 +301,7 @@ extension IntegerFormatOptions : DocumentableStruct {
 
 public struct YearFormatOptions : Codable, NumberValidator {
     public typealias Value = Int
-    
+
     private enum CodingKeys : String, CodingKey, CaseIterable {
         case allowFuture, allowPast, minimumYear, maximumYear,
             minInvalidMessage, maxInvalidMessage, invalidMessage
@@ -310,18 +311,18 @@ public struct YearFormatOptions : Codable, NumberValidator {
     public var allowPast: Bool?
     public var minimumYear: Int?
     public var maximumYear: Int?
-    
+
     public var minInvalidMessage: String?
     public var maxInvalidMessage: String?
     public var invalidMessage: String?
-    
+
     public init() {
     }
-    
+
     public var numberStyle: NumberFormatStyle! { NumberFormatStyle.none }
     public var usesGroupingSeparator: Bool! { false }
     public var maximumFractionDigits: Int! { 0 }
-    
+
     public var minimumValue: Int? {
         minimumYear ?? ((allowPast ?? true) ? nil : Date().year)
     }
@@ -329,7 +330,7 @@ public struct YearFormatOptions : Codable, NumberValidator {
         maximumYear ?? ((allowFuture ?? true) ? nil : Date().year)
     }
     public var stepInterval: Int? { 1 }
-    
+
     public func convertToValue(from number: NSNumber) -> Int {
         number.intValue
     }
@@ -339,9 +340,9 @@ extension YearFormatOptions : DocumentableStruct {
     public static func codingKeys() -> [CodingKey] {
         CodingKeys.allCases
     }
-    
+
     public static func isRequired(_ codingKey: CodingKey) -> Bool { false }
-    
+
     public static func documentProperty(for codingKey: CodingKey) throws -> DocumentProperty {
         guard let key = codingKey as? CodingKeys else {
             throw DocumentableError.invalidCodingKey(codingKey, "\(codingKey) is not recognized for this class")
@@ -355,7 +356,7 @@ extension YearFormatOptions : DocumentableStruct {
             return .init(propertyType: .primitive(.string))
         }
     }
-    
+
     public static func examples() -> [YearFormatOptions] {
         let exA = YearFormatOptions()
         var exB = YearFormatOptions()
@@ -376,7 +377,7 @@ extension Date {
 
 public struct DoubleFormatOptions : Codable, NumberValidator {
     public typealias Value = Double
-    
+
     private enum CodingKeys : String, CodingKey, CaseIterable {
         case _numberStyle = "numberStyle",
         _usesGroupingSeparator = "usesGroupingSeparator",
@@ -384,36 +385,36 @@ public struct DoubleFormatOptions : Codable, NumberValidator {
         minimumValue, maximumValue, stepInterval,
         minInvalidMessage, maxInvalidMessage, invalidMessage
     }
-    
+
     public var numberStyle: NumberFormatStyle! {
         get { _numberStyle ?? NumberFormatStyle.none }
         set(newValue) { _numberStyle = newValue }
     }
     private var _numberStyle: NumberFormatStyle?
-    
+
     public var usesGroupingSeparator: Bool! {
         get { _usesGroupingSeparator ?? true }
         set(newValue) { _usesGroupingSeparator = newValue }
     }
     private var _usesGroupingSeparator: Bool?
-    
+
     public var maximumFractionDigits: Int! {
         get { _maximumFractionDigits ?? 2 }
         set(newValue) { _maximumFractionDigits = newValue }
     }
     private var _maximumFractionDigits: Int?
-    
+
     public var minimumValue: Double?
     public var maximumValue: Double?
     public var stepInterval: Double?
-    
+
     public var minInvalidMessage: String?
     public var maxInvalidMessage: String?
     public var invalidMessage: String?
-    
+
     public init() {
     }
-    
+
     public func convertToValue(from number: NSNumber) -> Double {
         number.doubleValue
     }
@@ -423,9 +424,9 @@ extension DoubleFormatOptions : DocumentableStruct {
     public static func codingKeys() -> [CodingKey] {
         CodingKeys.allCases
     }
-    
+
     public static func isRequired(_ codingKey: CodingKey) -> Bool { false }
-    
+
     public static func documentProperty(for codingKey: CodingKey) throws -> DocumentProperty {
         guard let key = codingKey as? CodingKeys else {
             throw DocumentableError.invalidCodingKey(codingKey, "\(codingKey) is not recognized for this class")
@@ -443,7 +444,7 @@ extension DoubleFormatOptions : DocumentableStruct {
             return .init(propertyType: .primitive(.string))
         }
     }
-    
+
     public static func examples() -> [DoubleFormatOptions] {
         let exA = DoubleFormatOptions()
         var exB = DoubleFormatOptions()
@@ -460,12 +461,12 @@ extension DoubleFormatOptions : DocumentableStruct {
     }
 }
 
-public struct DateTimeValidator : TextInputValidator {
+public struct DateTimeValidator : TextEntryValidator {
     let pickerMode: RSDDatePickerMode
     let range: RSDDateRange?
     let localizedFormatter: DateFormatter
     let codingFormatter: DateFormatter
-    
+
     public init(pickerMode: RSDDatePickerMode, range: RSDDateRange?) {
         self.pickerMode = pickerMode
         self.range = range
@@ -486,7 +487,7 @@ public struct DateTimeValidator : TextInputValidator {
         }
         self.localizedFormatter = localizedFormatter
     }
-    
+
     public func answerText(for answer: Any?) -> String? {
         if let str = answer as? String, let date = codingFormatter.date(from: str) {
             return localizedFormatter.string(from: date)
@@ -498,7 +499,7 @@ public struct DateTimeValidator : TextInputValidator {
             return nil
         }
     }
-    
+
     public func validateInput(text: String?) throws -> Any? {
         guard let text = text else { return nil }
         guard let date = localizedFormatter.date(from: text) else {
@@ -508,7 +509,7 @@ public struct DateTimeValidator : TextInputValidator {
         try validateDate(date: date)
         return date
     }
-    
+
     public func validateInput(answer: Any?) throws -> Any? {
         guard let answer = answer else { return nil }
         if let text = answer as? String {
@@ -526,7 +527,7 @@ public struct DateTimeValidator : TextInputValidator {
             throw RSDInputFieldError.invalidType(context)
         }
     }
-    
+
     func validateDate(date: Date) throws {
         if let minDate = range?.minimumDate, date < minDate {
             let context = RSDInputFieldError.Context(identifier: nil,
@@ -578,13 +579,13 @@ extension RSDLengthFormatter : MeasurementFormatter {
 extension RSDMassFormatter : MeasurementFormatter {
 }
 
-protocol MeasurementTextInputValidator : TextInputValidator {
+protocol MeasurementTextEntryValidator : TextEntryValidator {
     var answerType: AnswerType { get }
     var measurementFormatter : MeasurementFormatter { get }
 }
 
-extension MeasurementTextInputValidator {
-    
+extension MeasurementTextEntryValidator {
+
     public func answerText(for answer: Any?) -> String? {
         guard let answer = answer else { return nil }
         if let jsonValue = answer as? JsonElement,
@@ -595,12 +596,12 @@ extension MeasurementTextInputValidator {
             return measurementFormatter.string(for: answer)
         }
     }
-    
+
     public func validateInput(text: String?) throws -> Any? {
         guard let text = text else { return nil }
         return try self.measurementFormatter.measurement(from: text)
     }
-    
+
     public func validateInput(answer: Any?) throws -> Any? {
         return answer
     }

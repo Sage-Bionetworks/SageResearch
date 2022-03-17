@@ -32,6 +32,7 @@
 //
 
 import XCTest
+import AssessmentModel
 @testable import Research
 
 class CodableUIActionObjectTests: XCTestCase {
@@ -77,7 +78,7 @@ class CodableUIActionObjectTests: XCTestCase {
             
             let cancelAction = object.action(for: .navigation(.cancel), on: object)
             XCTAssertNotNil(cancelAction)
-            XCTAssertEqual((cancelAction as? RSDUIActionObject)?.iconName, "closeX")
+            XCTAssertEqual((cancelAction as? ButtonActionInfoObject)?.iconName, "closeX")
             
             let learnMoreAction = object.action(for: .navigation(.learnMore), on: object)
             XCTAssertNotNil(learnMoreAction)
@@ -127,7 +128,7 @@ class CodableUIActionObjectTests: XCTestCase {
             let defaultA = object.action(for: .custom("defaultA"), on: object)
             XCTAssertNotNil(defaultA)
             XCTAssertEqual(defaultA?.buttonTitle, "Custom Action A")
-            XCTAssertTrue(defaultA is RSDUIActionObject)
+            XCTAssertTrue(defaultA is ButtonActionInfoObject)
             
             let navigationC = object.action(for: .custom("navigationC"), on: object)
             XCTAssertNotNil(navigationC)

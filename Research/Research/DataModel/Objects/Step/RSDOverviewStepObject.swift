@@ -33,6 +33,7 @@
 
 import Foundation
 import JsonModel
+import AssessmentModel
 
 /// `RSDOverviewStepObject` extends the `RSDUIStepObject` to include information about an activity including
 /// what permissions are required by this task. Without these preconditions, the task cannot measure or
@@ -94,6 +95,10 @@ open class RSDOverviewStepObject : RSDUIStepObject, RSDOverviewStep, Encodable {
         try container.encodeIfPresent(self.icons, forKey: .icons)
     }
     
+    public func spokenInstruction(at timeInterval: TimeInterval) -> String? {
+        nil
+    }
+
     // Overrides must be defined in the base implementation
     
     override open class func codingKeys() -> [CodingKey] {

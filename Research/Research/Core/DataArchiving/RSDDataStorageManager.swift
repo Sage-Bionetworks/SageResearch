@@ -32,6 +32,7 @@
 //
 
 import Foundation
+import AssessmentModel
 
 
 /// The data storage manager controls storing of user data that is stored across task runs. It is a

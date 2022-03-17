@@ -33,6 +33,7 @@
 
 import Foundation
 import JsonModel
+import AssessmentModel
 
 public struct RSDTaskInfoObject : RSDTaskInfo, Codable {
     private enum CodingKeys : String, CodingKey, CaseIterable {

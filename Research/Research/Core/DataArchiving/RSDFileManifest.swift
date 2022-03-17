@@ -33,6 +33,7 @@
 
 import JsonModel
 import Foundation
+import AssessmentModel
 
 /// A list of reserved filenames for data added to an archive that is keyed to a custom-built data file.
 public enum RSDReservedFilename : String {

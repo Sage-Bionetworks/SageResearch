@@ -34,6 +34,7 @@
 import JsonModel
 import Foundation
 import MobilePassiveData
+import AssessmentModel
 
 /// The TaskViewModel is a base class implementation of the presentation layer for managing a task. It uses
 /// the [Model–view–viewmodel (MVVM)](https://en.wikipedia.org/wiki/Model-view-viewmodel) design pattern to
@@ -840,7 +841,7 @@ extension RSDTaskViewModel {
         // Look to see if the last step has a navigation on it that could return the participant
         // back into the task.
         if let actionHandler = (nextStep as? RSDUIActionHandler) ?? (self.task as? RSDUIActionHandler),
-            let _ = actionHandler.action(for: .navigation(.skip), on: nextStep) as? RSDNavigationUIAction {
+           let _ = actionHandler.action(for: .navigation(.skip), on: nextStep) as? RSDNavigationUIAction {
             return false
         }
         

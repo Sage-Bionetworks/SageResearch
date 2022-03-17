@@ -33,10 +33,13 @@
 
 import Foundation
 import JsonModel
+import AssessmentModel
 
 /// `RSDUIActionHandlerObject` is intended as an abstract implementation of the action handler that implements
 /// the `Codable` protocol.
 open class RSDUIActionHandlerObject : RSDUIActionHandler {
+    
+    public var comment: String?
     
     /// A mapping dictionary of action type to action.
     public var actions: [RSDUIActionType : RSDUIAction]?
@@ -171,5 +174,16 @@ open class RSDUIActionHandlerObject : RSDUIActionHandler {
         case .shouldHideActions:
             return DocumentProperty(propertyType: .referenceArray(RSDUIActionType.documentableType()))
         }
+    }
+}
+
+extension RSDUIActionHandlerObject : ButtonActionHandler {
+    
+    public func button(_ buttonType: ButtonType, node: Node) -> ButtonActionInfo? {
+        (node as? RSDStep).flatMap { self.action(for: buttonType.actionType, on: $0) }
+    }
+    
+    public func shouldHideButton(_ buttonType: ButtonType, node: Node) -> Bool? {
+        (node as? RSDStep).flatMap { self.shouldHideAction(for: buttonType.actionType, on: $0) }
     }
 }

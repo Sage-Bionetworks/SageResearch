@@ -33,11 +33,12 @@
 
 import Foundation
 import JsonModel
+import AssessmentModel
 
 /// `RSDStepTransformerObject` is used in decoding a step with replacement properties for some or all of the steps in a
 /// section that is defined using a different resource. The factory will convert this step into an appropriate
 /// `RSDSectionStep` from the decoded object.
-public struct RSDStepTransformerObject : RSDStepTransformer, RSDStep, Decodable {
+public struct RSDStepTransformerObject : RSDStepTransformer, RSDStep, RSDNodeStep, Decodable {
     private enum CodingKeys : String, CodingKey, CaseIterable {
         case identifier, stepType = "type", resourceTransformer
     }
@@ -82,7 +83,7 @@ public struct RSDStepTransformerObject : RSDStepTransformer, RSDStep, Decodable 
         if let copyableStep = stepDecoder.step as? RSDCopyStep {
             self.transformedStep = try copyableStep.copy(with: identifier, decoder: decoder)
         }
-        else if let copyableStep = stepDecoder.step as? RSDCopyWithIdentifier {
+        else if let copyableStep = stepDecoder.step as? CopyWithIdentifier {
             self.transformedStep = (copyableStep.copy(with: identifier) as! RSDStep)
         }
         else {
@@ -109,6 +110,10 @@ public struct RSDStepTransformerObject : RSDStepTransformer, RSDStep, Decodable 
     public func validate() throws {
         try transformedStep.validate()
     }
+    
+    public var comment: String? {
+        transformedStep.comment
+    }
 }
 
 fileprivate struct _ResourceInfo : ResourceInfo {
@@ -130,11 +135,15 @@ fileprivate struct _StepDecoder: Decodable {
     }
 }
 
-fileprivate struct PlaceholderStep: RSDStep {
+fileprivate struct PlaceholderStep: RSDNodeStep {
     let identifier: String
     let stepType: RSDStepType = "placeholder"
-    func instantiateStepResult() -> ResultData { RSDResultObject(identifier: identifier) }
+    func instantiateStepResult() -> ResultData { ResultObject(identifier: identifier) }
     func validate() throws { }
+    
+    var typeName: String {
+        stepType.rawValue
+    }
 }
 
 extension RSDStepTransformerObject : DocumentableObject {

@@ -32,6 +32,7 @@
 //
 
 import Foundation
+import AssessmentModel
 
 /// `RSDModalStepTableItem` is used to represent a item row that, when selected, should display a
 /// step view controller.

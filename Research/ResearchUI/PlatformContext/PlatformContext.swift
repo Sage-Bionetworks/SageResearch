@@ -164,6 +164,7 @@ import AppKit
 
 #else
 import UIKit
+import AssessmentModel
 extension UIDevice {
     
     /// An identifier for the device type pulled from the system info.
