@@ -33,6 +33,7 @@
 
 import JsonModel
 import Foundation
+import AssessmentModel
 
 /// A result summary step is used to display a result that is calculated or measured earlier in the task.
 public protocol RSDResultSummaryStep : RSDUIStep {

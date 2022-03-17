@@ -33,6 +33,7 @@
 
 import UIKit
 import Research
+import AssessmentModel
 
 /// `RSDInstructionStepViewController` is a custom step view controller that is intended to be used with the
 /// `RSDInstructionStepViewController.nib` file. This is the default view controller for steps that

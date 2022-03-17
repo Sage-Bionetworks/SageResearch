@@ -32,21 +32,18 @@
 //
 import Foundation
 import JsonModel
+import AssessmentModel
 
 /// `RSDResultType` is an extendable string enum used by `RSDFactory` to create the appropriate
 /// result type.
 extension SerializableResultType {
 
-    /// Defaults to creating a `RSDResult`.
     public static let base: SerializableResultType = "base"
     
-    /// Defaults to creating a `RSDTaskResult`.
     public static let task: SerializableResultType = "task"
     
-    /// Defaults to creating a `SectionResultObject`.
     public static let section: SerializableResultType = "section"
     
-    // syoung 03/09/2022 Added back in for MobileToolbox
     public static let navigation: SerializableResultType = "navigation"
     
     // syoung 03/16/2022 Add in the static value extensions
@@ -54,23 +51,5 @@ extension SerializableResultType {
     public static let collection: SerializableResultType = "collection"
     public static let file: SerializableResultType = "file"
     public static let error: SerializableResultType = "error"
-}
-
-// List of the serialization examples included in this library.
-
-extension ResultDataSerializer {
-    func libraryExamples() -> [SerializableResultData] {
-        [
-            RSDTaskResultObject.examples().first!,
-            SectionResultObject.examples().first!,
-            RSDResultObject.examples().first!,
-            RSDCollectionResultObject.examples().first!,
-        ]
-    }
-    
-    func registerLibraryExamples(with factory: RSDFactory) {
-        self.add(contentsOf: libraryExamples())
-        factory.registerSerializer(self, for: ResultData.self)
-    }
 }
 

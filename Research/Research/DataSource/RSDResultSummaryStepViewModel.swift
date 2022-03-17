@@ -33,6 +33,7 @@
 
 import Foundation
 import JsonModel
+import AssessmentModel
 
 open class RSDResultSummaryStepViewModel: RSDStepViewModel {
     

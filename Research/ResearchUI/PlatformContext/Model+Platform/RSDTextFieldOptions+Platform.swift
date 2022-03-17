@@ -32,16 +32,16 @@
 //
 
 import Research
+import AssessmentModel
 
 #if os(iOS) || os(tvOS)
 import UIKit
 
-extension RSDTextAutocapitalizationType {
+extension TextAutoCapitalizationType {
 
     /// Return the `UITextAutocapitalizationType` that maps to this enum.
     public func textAutocapitalizationType() -> UITextAutocapitalizationType {
-        guard let idx = self.rawIntValue(),
-            let type = UITextAutocapitalizationType(rawValue: Int(idx))
+        guard let type = UITextAutocapitalizationType(rawValue: indexPosition)
             else {
                 return .none
         }
@@ -49,12 +49,11 @@ extension RSDTextAutocapitalizationType {
     }
 }
 
-extension RSDTextAutocorrectionType {
+extension TextAutoCorrectionType {
 
     /// Return the `UITextAutocorrectionType` that maps to this enum.
     public func textAutocorrectionType() -> UITextAutocorrectionType {
-        guard let idx = self.rawIntValue(),
-            let type = UITextAutocorrectionType(rawValue: Int(idx))
+        guard let type = UITextAutocorrectionType(rawValue: indexPosition)
             else {
                 return .default
         }
@@ -62,12 +61,11 @@ extension RSDTextAutocorrectionType {
     }
 }
 
-extension RSDTextSpellCheckingType {
+extension TextSpellCheckingType {
     
     /// Return the `UITextSpellCheckingType` that maps to this enum.
     public func textSpellCheckingType() -> UITextSpellCheckingType {
-        guard let idx = self.rawIntValue(),
-            let type = UITextSpellCheckingType(rawValue: Int(idx))
+        guard let type = UITextSpellCheckingType(rawValue: indexPosition)
             else {
                 return .default
         }
@@ -75,12 +73,11 @@ extension RSDTextSpellCheckingType {
     }
 }
 
-extension RSDKeyboardType {
+extension KeyboardType {
 
     /// Return the `UIKeyboardType` that maps to this enum.
     public func keyboardType() -> UIKeyboardType {
-        guard let idx = self.rawIntValue(),
-            let type = UIKeyboardType(rawValue: Int(idx))
+        guard let type = UIKeyboardType(rawValue: indexPosition)
             else {
                 return .default
         }

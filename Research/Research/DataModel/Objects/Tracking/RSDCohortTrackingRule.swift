@@ -33,6 +33,7 @@
 
 import Foundation
 import JsonModel
+import AssessmentModel
 
 /// A cohort rule can be used to mutate a list of cohorts of which the participant is a member. A cohort
 /// is a data group that participants are added to based on the results of survey questions.

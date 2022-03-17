@@ -33,15 +33,24 @@
 
 import UIKit
 import MobilePassiveData
+import JsonModel
 import Research
 import ResearchUI
+import AssessmentModel
 
 enum Orientation : String, Identifiable {
     case portrait, landscape
     var id: String { self.rawValue }
 }
 
-class CustomTask : RSDOrientationTask {
+class CustomTask : RSDOrientationTask, RSDSageResearchTask, RSDNode {
+    func instantiateResult() -> ResultData {
+        instantiateTaskResult()
+    }
+    
+    var typeName: String {
+        "custom"
+    }
     
     let identifier: String
     let taskOrientation: UIInterfaceOrientationMask
@@ -60,16 +69,16 @@ class CustomTask : RSDOrientationTask {
         let step1 = RSDInstructionStepObject(identifier: "step1")
         step1.title = "Step 1 - \(self.identifier)"
         step1.detail = "This is the first step."
-        step1.imageTheme = RSDFetchableImageThemeElementObject(imageName: "cat1")
+        step1.imageTheme = FetchableImage(imageName: "cat1")
         let step2 = RSDInstructionStepObject(identifier: "step2")
         step2.title = "Step 2 - \(self.identifier)"
         step2.detail = "This is the second step."
-        step2.imageTheme = RSDFetchableImageThemeElementObject(imageName: "cat2")
+        step2.imageTheme = FetchableImage(imageName: "cat2")
         return RSDConditionalStepNavigatorObject(with: [step1, step2])
     }()
     
     func instantiateTaskResult() -> RSDTaskResult {
-        RSDTaskResultObject(identifier: self.identifier)
+        BranchNodeResultObject(identifier: self.identifier)
     }
     
     var schemaInfo: RSDSchemaInfo? { nil }

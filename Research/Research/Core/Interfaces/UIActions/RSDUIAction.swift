@@ -2,7 +2,7 @@
 //  RSDUIAction.swift
 //  Research
 //
-//  Copyright © 2017-2019 Sage Bionetworks. All rights reserved.
+//  Copyright © 2017-2022 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -32,18 +32,7 @@
 //
 
 import Foundation
-import JsonModel
+import AssessmentModel
 
-/// The `RSDUIAction` protocol can be used to customize the title and image displayed for a
-/// given action of the UI.
-///
-/// - seealso: `RSDUIActionType` and `RSDUIActionHandler`
-public protocol RSDUIAction : ResourceInfo {
-    
-    /// The title to display on the button associated with this action.
-    var buttonTitle: String? { get }
-    
-        /// The name of the icon to display on the button associated with this action.
-    var iconName: String? { get }
+public protocol RSDUIAction : ButtonActionInfo {
 }
-

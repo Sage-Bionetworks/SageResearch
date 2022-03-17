@@ -35,6 +35,7 @@ import XCTest
 @testable import Research
 @testable import Research_UnitTest
 import JsonModel
+import AssessmentModel
 
 class TaskViewModelTests: XCTestCase {
 
@@ -113,7 +114,7 @@ class TaskViewModelTests: XCTestCase {
         var task = TestTask(identifier: "test", stepNavigator: navigator)
         
         // Create an answer result to add to the final task result.
-        let taskResult = RSDTaskResultObject(identifier: "test")
+        let taskResult = AssessmentResultObject(identifier: "test")
         let answerResultBlu = AnswerResultObject(identifier: "blu", value: .string("goo"))
         taskResult.appendAsyncResult(with: answerResultBlu)
         task.taskResult = taskResult

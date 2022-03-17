@@ -32,12 +32,12 @@
 //
 
 import Foundation
-
+import AssessmentModel
 
 /// Protocol to describe a task that should be copied for each run of the task rather than simply passed.
 /// This is used to allow an architecture where the task model uses a pointer to an in-memory object that is
 /// used during navigation.
-public protocol RSDCopyTask : RSDTask, RSDCopyWithIdentifier, RSDTaskTransformer {
+public protocol RSDCopyTask : RSDTask, CopyWithIdentifier, RSDTaskTransformer {
     
     /// Copy the step to a new instance with the given identifier, but otherwise, equal.
     /// - parameters:

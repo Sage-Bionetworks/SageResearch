@@ -33,6 +33,7 @@
 
 import JsonModel
 import Foundation
+import AssessmentModel
 
 /// `RSDRange` defines range constraints that are appropriate for a given data type.
 public protocol RSDRange {

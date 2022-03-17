@@ -33,11 +33,14 @@
 
 
 import Foundation
+import AssessmentModel
 
 /// `RSDUIStep` is used to define a single "display unit". Depending upon the available real-estate, more
 /// than one ui step may be displayed at a time. For example, on an iPad, you may choose to group a set of
 /// questions using a `RSDSectionStep`.
 public protocol RSDUIStep: RSDStep, RSDUIActionHandler, ContentNode {
+    
+    var footnote: String? { get }
 }
 
 extension RSDUIStep {

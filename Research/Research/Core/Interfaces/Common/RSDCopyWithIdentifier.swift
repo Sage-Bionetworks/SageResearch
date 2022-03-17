@@ -1,5 +1,5 @@
 //
-//  RSDCopyWithIdentifier.swift
+//  CopyWithIdentifier.swift
 //  Research
 //
 //  Copyright © 2017-2018 Sage Bionetworks. All rights reserved.
@@ -34,10 +34,4 @@
 import Foundation
 
 
-/// A lightweight protocol for copying objects with a new identifier.
-public protocol RSDCopyWithIdentifier {
-    
-    /// Copy the step to a new instance with the given identifier, but otherwise, equal.
-    /// - parameter identifier: The new identifier.
-    func copy(with identifier: String) -> Self
-}
+

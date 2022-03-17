@@ -32,7 +32,8 @@
 //
 
 import Foundation
-
+import JsonModel
+import AssessmentModel
 
 /// `RSDSectionStep` is used to define a logical subgrouping of steps such as a section in a longer survey
 /// or an active step that includes an instruction step, countdown step, and activity step.
@@ -66,7 +67,7 @@ extension RSDSectionStep {
         let result = self.instantiateStepResult()
         guard let taskResult = result as? RSDTaskResult else {
             assertionFailure("Expected that a section step will return a result that conforms to RSDTaskResult protocol.")
-            return SectionResultObject(identifier: identifier)
+            return BranchNodeResultObject(identifier: identifier)
         }
         return taskResult
     }
