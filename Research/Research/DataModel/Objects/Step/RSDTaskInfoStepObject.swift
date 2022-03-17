@@ -33,6 +33,7 @@
 
 import Foundation
 import JsonModel
+import AssessmentModel
 
 /// `RSDTaskInfoStepObject` is a concrete implementation of the `RSDTaskInfoStep` protocol.
 public struct RSDTaskInfoStepObject : RSDTaskInfoStep, Codable {
@@ -84,7 +85,7 @@ public struct RSDTaskInfoStepObject : RSDTaskInfoStep, Codable {
     /// Instantiate a step result that is appropriate for this step.
     /// - returns: `RSDTaskResultObject` with the `identifier` from this task reference.
     public func instantiateStepResult() -> ResultData {
-        return RSDTaskResultObject(identifier: identifier)
+        return AssessmentResultObject(identifier: identifier)
     }
     
     /// Required method for the `RSDStep` protocol. No validation for this step.

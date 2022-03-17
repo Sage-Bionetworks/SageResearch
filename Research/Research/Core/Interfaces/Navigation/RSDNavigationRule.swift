@@ -32,11 +32,13 @@
 //
 
 import Foundation
+import JsonModel
+import AssessmentModel
 
 /// Define the navigation rule as a protocol to allow for protocol-oriented extension (multiple
 /// inheritance). Currently defined usage is to allow the `RSDConditionalStepNavigator` to check if a
 /// step has a navigation rule and apply as necessary.
-public protocol RSDNavigationRule {
+public protocol RSDNavigationRule : NavigationRule {
     
     /// Identifier for the next step to navigate to based on the current task result and the conditional
     /// rule associated with this task.
@@ -48,6 +50,12 @@ public protocol RSDNavigationRule {
     ///                         display? If peeking at the next step then this parameter will be `true`.
     /// - returns: The identifier of the next step.
     func nextStepIdentifier(with result: RSDTaskResult?, isPeeking: Bool) -> String?
+}
+
+public extension RSDNavigationRule {
+    func nextNodeIdentifier(branchResult: BranchNodeResult, isPeeking: Bool) -> String? {
+        nextStepIdentifier(with: branchResult as? RSDTaskResult, isPeeking: isPeeking)
+    }
 }
 
 /// A navigation skip rule applies to this step to allow the step to be skipped.

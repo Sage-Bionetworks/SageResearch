@@ -8,8 +8,8 @@ let package = Package(
     defaultLocalization: "en",
     platforms: [
         // Add support for all platforms starting from a specific version.
-        .macOS(.v10_15),
-        .iOS(.v11),
+        .iOS(.v14),
+        .macOS(.v11),
         .watchOS(.v4),
         .tvOS(.v11)
     ],
@@ -30,12 +30,12 @@ let package = Package(
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
-        .package(name: "JsonModel",
-                 url: "https://github.com/Sage-Bionetworks/JsonModel-Swift.git",
-                 from: "1.4.0"),
+        .package(name: "AssessmentModel",
+                 url: "https://github.com/Sage-Bionetworks/AssessmentModelKMM.git",
+                 from: "0.5.0"),
         .package(name: "MobilePassiveData",
                  url: "https://github.com/Sage-Bionetworks/MobilePassiveData-SDK.git",
-                 from: "1.2.3"),
+                 from: "2.0.3"),
     ],
     targets: [
 
@@ -43,10 +43,10 @@ let package = Package(
         // target is developed in Obj-c so it requires a separate target.
         .target(
             name: "Research",
-            dependencies: ["JsonModel",
-                           "Formatters",
-                           .product(name: "MobilePassiveData",
-                                    package:  "MobilePassiveData"),
+            dependencies: [
+                "Formatters",
+                .product(name: "MobilePassiveData", package:  "MobilePassiveData"),
+                .product(name: "AssessmentModel", package:  "AssessmentModel"),
             ],
             path: "Research/Research/",
             exclude: ["Info-iOS.plist",
@@ -75,8 +75,9 @@ let package = Package(
         // The following targets are set up for unit testing.
         .target(
             name: "Research_UnitTest",
-            dependencies: ["Research",
-                           "ResearchUI",
+            dependencies: [
+                "Research",
+                "ResearchUI",
             ],
             path: "Research/Research_UnitTest/",
             exclude: ["Info.plist"]),
@@ -98,7 +99,9 @@ let package = Package(
             ]),
         .testTarget(
             name: "ResearchUITests",
-            dependencies: ["ResearchUI"],
+            dependencies: [
+                "ResearchUI",
+            ],
             path: "Research/ResearchUITests/",
             exclude: ["Info.plist"]),
         

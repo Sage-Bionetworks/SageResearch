@@ -33,6 +33,7 @@
 
 import Foundation
 import JsonModel
+import AssessmentModel
 
 open class QuestionTableItemGroup : RSDTableItemGroup {
     
@@ -41,7 +42,7 @@ open class QuestionTableItemGroup : RSDTableItemGroup {
     public let answerResult: AnswerResult
     
     open override var isAnswerValid: Bool {
-        return question.isOptional || (answerResult.jsonValue != nil)
+        return question.optional || (answerResult.jsonValue != nil)
     }
     
     public init(beginningRowIndex: Int,
@@ -56,7 +57,7 @@ open class QuestionTableItemGroup : RSDTableItemGroup {
             let initialAnswer: JsonElement? = {
                 guard let jsonValue = initialValue, jsonValue != .null else { return .null }
                 if case .object(let dictionary) = jsonValue {
-                    let identifier = inputItem.identifier ?? question.identifier
+                    let identifier = inputItem.resultIdentifier ?? question.identifier
                     return (dictionary[identifier] as? JsonValue).map { JsonElement($0) }
                 }
                 else {
@@ -64,7 +65,7 @@ open class QuestionTableItemGroup : RSDTableItemGroup {
                 }
             }()
 
-            if let textItem = inputItem as? KeyboardTextInputItem {
+            if let textItem = inputItem as? TextInputItem {
                 return TextInputItemTableItem(questionIdentifier: question.identifier,
                                               rowIndex: idx + beginningRowIndex,
                                               textItem: textItem,
@@ -97,7 +98,7 @@ open class QuestionTableItemGroup : RSDTableItemGroup {
         
         // To get the index of our item, add our `beginningRowIndex` to `indexPath.item`.
         let selected = !item.selected
-        let deselectOthers = question.isSingleAnswer || item.inputItem.isExclusive ||
+        let deselectOthers = question.singleAnswer || item.inputItem.isExclusive ||
                 (selectableItems.first(where: { $0.inputItem.isExclusive && $0.selected }) != nil)
         let reselectOthers = item.inputItem.isExclusive && !selected
         
@@ -119,7 +120,7 @@ open class QuestionTableItemGroup : RSDTableItemGroup {
     
     open func saveAnswer(_ answer: Any, at index: Int) throws {
         if let textItem = self.items[index] as? TextInputItemTableItem {
-            let answer = try textItem.textValidator.validateInput(answer: answer)
+            let answer = try textItem.textValidator.validateAnswer(answer as? JsonValue)
             textItem.currentAnswer = jsonElement(for: answer, at: index)
         }
         else if let choiceItem = self.items[index] as? ChoiceInputItemTableItem {
@@ -149,13 +150,13 @@ open class QuestionTableItemGroup : RSDTableItemGroup {
             }
             return .array(arr)
         }
-        else if question.isSingleAnswer {
+        else if question.singleAnswer {
             return selectableItems.first(where: { $0.selected })?.currentAnswer ?? .null
         }
         else {
             let dictionary = selectableItems.reduce(into: [String : JsonSerializable]()) { (hashtable, item) in
                 guard let answer = item.currentAnswer, answer != .null else { return }
-                hashtable[item.inputItem.identifier ?? item.identifier] = answer.jsonObject()
+                hashtable[item.inputItem.resultIdentifier ?? item.identifier] = answer.jsonObject()
             }
             return .object(dictionary)
         }

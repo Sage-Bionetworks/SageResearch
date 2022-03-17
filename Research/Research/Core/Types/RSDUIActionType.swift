@@ -33,6 +33,7 @@
 
 import Foundation
 import JsonModel
+import AssessmentModel
 
 /// The `RSDUIActionType` enum describes standard navigation actions that are common to a
 /// given UI step. It is extendable using the custom field.
@@ -85,6 +86,10 @@ public enum RSDUIActionType {
         } else {
             return nil
         }
+    }
+    
+    public var buttonType : ButtonType {
+        .init(rawValue: self.rawValue)
     }
 }
 

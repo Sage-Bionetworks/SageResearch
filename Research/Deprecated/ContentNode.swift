@@ -1,5 +1,5 @@
 //
-//  Result.swift
+//  ContentNode.swift
 //  Research
 //
 //  Copyright © 2020 Sage Bionetworks. All rights reserved.
@@ -31,26 +31,35 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-import Foundation
 import JsonModel
+import Foundation
+import AssessmentModel
 
-/// The `BranchNodeResult` is the result created for a given level of navigation of a node tree.
-public extension BranchNodeResult {
+public protocol ResultNode : ContentNode {
+    func instantiateResult() -> ResultData
+}
+
+public protocol FormStep : ResultNode, RSDUIStep {
     
-    /// The path traversed by this branch. The `nodePath` is specific to the navigation implemented
-    /// on iOS and is different from the `path` implementation in the Kotlin-native framework.
-    var nodePath: [String] {
-        get {
-            self.path.map { $0.identifier }
+    /// A list of the child result nodes. Typically, these will be a collection of `Question`
+    /// objects but that is not required.
+    var children: [ResultNode] { get }
+}
+
+public extension FormStep {
+    
+    /// A form step instantiates a step result.
+    func instantiateResult() -> ResultData {
+        instantiateStepResult()
+    }
+    
+    /// Check to see if the step result is a collection result and return that if valid.
+    func instantiateCollectionResult() -> CollectionResult {
+        guard let result = instantiateStepResult() as? CollectionResult else {
+            debugPrint("WARNING!!! The instantiated step result does not conform to `CollectionResult`.")
+            return CollectionResultObject(identifier: self.identifier)
         }
-        set {
-            self.path = newValue.map { .init(identifier: $0, direction: .forward) }
-        }
+        return result
     }
 }
 
-extension AssessmentResultObject : RSDTaskResult {
-}
-
-extension BranchNodeResultObject : RSDTaskResult {
-}

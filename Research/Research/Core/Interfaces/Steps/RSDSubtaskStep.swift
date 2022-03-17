@@ -33,6 +33,7 @@
 
 import JsonModel
 import Foundation
+import AssessmentModel
 
 /// `RSDSubtaskStep` is a step that contains a task reference.
 public protocol RSDSubtaskStep : RSDStep {

@@ -32,6 +32,7 @@
 //
 
 import Foundation
+import AssessmentModel
 
 /// A cohort navigation step is a step that carries information about navigation rules to apply either
 /// before or after displaying this step based on the currently applied cohorts.

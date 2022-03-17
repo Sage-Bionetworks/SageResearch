@@ -37,14 +37,14 @@ import JsonModel
 import UIKit
 import ResearchUI
 import MobilePassiveData
+import AssessmentModel
 
 func setupPlatformContext() {
     resourceLoader = ResourceLoader()
     LocalizationBundle.registerDefaultBundlesIfNeeded()
 }
 
-public struct TestStep : RSDStep, RSDNavigationRule, RSDNavigationSkipRule, RSDOptionalStep {
-    
+public struct TestStep : RSDNodeStep, RSDNavigationRule, RSDNavigationSkipRule, RSDOptionalStep {
     public let identifier: String
     public var stepType: RSDStepType = .instruction
     public var result: ResultData?
@@ -99,6 +99,10 @@ public struct TestStep : RSDStep, RSDNavigationRule, RSDNavigationSkipRule, RSDO
         copy.validationError = validationError
         return copy
     }
+    
+    public var typeName: String {
+        self.stepType.rawValue
+    }
 }
 
 public struct TestConditionalNavigator: RSDConditionalStepNavigator {
@@ -111,7 +115,7 @@ public struct TestConditionalNavigator: RSDConditionalStepNavigator {
     }
 }
 
-public class TestSubtaskStep : RSDSubtaskStep {
+public class TestSubtaskStep : RSDNodeStep, RSDSubtaskStep {
 
     public let task: RSDTask
     
@@ -121,6 +125,10 @@ public class TestSubtaskStep : RSDSubtaskStep {
     
     public var stepType: RSDStepType {
         return .subtask
+    }
+    
+    public var typeName: String {
+        self.stepType.rawValue
     }
 }
 
@@ -173,14 +181,13 @@ public final class TestTaskInfo : RSDTaskInfo, RSDTaskTransformer {
     }
 }
 
-public struct TestTask : RSDTask, RSDTrackingTask {
-
+public struct TestTask : RSDTask, RSDTrackingTask, RSDSageResearchTask, RSDNode {
     public let identifier: String
     public let stepNavigator: RSDStepNavigator
     public var schemaInfo: RSDSchemaInfo?
     public var asyncActions: [AsyncActionConfiguration]?
     
-    public var taskResult: RSDTaskResult?
+    public var taskResult: AssessmentResult?
     public var validationError: Error?
     public var tracker: RSDTrackingTask?
     
@@ -190,21 +197,13 @@ public struct TestTask : RSDTask, RSDTrackingTask {
     }
     
     public func instantiateTaskResult() -> RSDTaskResult {
-        return taskResult ?? RSDTaskResultObject(identifier: self.identifier)
+        return taskResult as? RSDTaskResult ?? AssessmentResultObject(identifier: self.identifier)
     }
     
     public func validate() throws {
         if let err = validationError {
             throw err
         }
-    }
-    
-    public func action(for actionType: RSDUIActionType, on step: RSDStep) -> RSDUIAction? {
-        return nil
-    }
-    
-    public func shouldHideAction(for actionType: RSDUIActionType, on step: RSDStep) -> Bool? {
-        return nil
     }
     
     public func taskData(for taskResult: RSDTaskResult) -> RSDTaskData? {
@@ -217,6 +216,12 @@ public struct TestTask : RSDTask, RSDTrackingTask {
     
     public func shouldSkipStep(_ step: RSDStep) -> (shouldSkip: Bool, stepResult: ResultData?) {
         return tracker?.shouldSkipStep(step) ?? (false, nil)
+    }
+    
+    public var typeName: String { "temp" }
+    
+    public func instantiateResult() -> ResultData {
+        instantiateTaskResult()
     }
 }
 

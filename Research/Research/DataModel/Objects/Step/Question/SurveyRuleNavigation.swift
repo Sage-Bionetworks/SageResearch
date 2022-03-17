@@ -32,6 +32,7 @@
 //
 
 import Foundation
+import AssessmentModel
 
 /// Convenience protocol for evaluating survey rules for a given `Question`.
 /// - note: This protocol does not require conformance to `Question` or `RSDCohortAssignmentStep`

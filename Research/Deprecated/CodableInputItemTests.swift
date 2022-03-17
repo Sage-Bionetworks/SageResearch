@@ -34,6 +34,7 @@
 import XCTest
 @testable import Research
 import JsonModel
+import AssessmentModel
 
 class CodableInputItemTests: XCTestCase {
 

@@ -34,6 +34,7 @@
 import XCTest
 @testable import Research
 import JsonModel
+import AssessmentModel
 
 class JsonDocumentableTests: XCTestCase {
 
@@ -44,38 +45,12 @@ class JsonDocumentableTests: XCTestCase {
     override func tearDown() {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
-
-    func testCreateJsonSchemaDocumentation() {
-        let factory = RSDFactory()
-        let doc = JsonDocumentBuilder(factory: factory)
-        
-        do {
-            let _ = try doc.buildSchemas()  
-        }
-        catch let err {
-            XCTFail("Failed to build the JsonSchema: \(err)")
-        }
-    }
     
     func testSerializers() {
         let factory = RSDFactory()
         
-        XCTAssertTrue(checkPolymorphicExamples(for: factory.answerTypeSerializer.examples,
-                                                using: factory, protocolType: AnswerType.self))
-        XCTAssertTrue(checkPolymorphicExamples(for: factory.buttonActionSerializer.examples,
-                                                using: factory, protocolType: RSDUIAction.self))
         XCTAssertTrue(checkPolymorphicExamples(for: factory.colorMappingSerializer.examples,
                                                 using: factory, protocolType: RSDColorMappingThemeElement.self))
-        XCTAssertTrue(checkPolymorphicExamples(for: factory.imageThemeSerializer.examples,
-                                                using: factory, protocolType: RSDImageThemeElement.self))
-        XCTAssertTrue(checkPolymorphicExamples(for: factory.inputItemSerializer.examples,
-                                                using: factory, protocolType: InputItemBuilder.self))
-        XCTAssertTrue(checkPolymorphicExamples(for: factory.resultSerializer.examples,
-                                                using: factory, protocolType: ResultData.self))
-        XCTAssertTrue(checkPolymorphicExamples(for: factory.resultNodeSerializer.examples,
-                                                using: factory, protocolType: ResultNode.self))
-        XCTAssertTrue(checkPolymorphicExamples(for: factory.stepSerializer.examples,
-                                                using: factory, protocolType: RSDStep.self))
         XCTAssertTrue(checkPolymorphicExamples(for: factory.taskSerializer.examples,
                                                 using: factory, protocolType: RSDTask.self))
         XCTAssertTrue(checkPolymorphicExamples(for: factory.viewThemeSerializer.examples,

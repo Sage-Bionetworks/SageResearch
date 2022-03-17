@@ -33,6 +33,7 @@
 
 import Foundation
 import JsonModel
+import AssessmentModel
 
 // TODO: syoung 04/02/2020 Add documentation for the Kotlin interfaces.
 
@@ -117,7 +118,7 @@ public protocol KeyboardTextInputItem : InputItem {
     /**
      * This can be used to return a class used to format and/or validate the text input.
      */
-    func buildTextValidator() -> TextInputValidator
+    func buildTextValidator() -> TextEntryValidator
     
     /**
      * For certain types of input items, there may be a picker associated with it.
@@ -125,7 +126,7 @@ public protocol KeyboardTextInputItem : InputItem {
     func buildPickerSource() -> RSDPickerDataSource?
 }
 
-public protocol TextInputValidator {
+public protocol TextEntryValidator {
     func answerText(for answer: Any?) -> String?
     func validateInput(text: String?) throws -> Any?
     func validateInput(answer: Any?) throws -> Any?
@@ -139,7 +140,7 @@ public extension DoubleTextInputItem {
     var answerType: AnswerType { AnswerTypeNumber() }
     var keyboardOptions: KeyboardOptions { KeyboardOptionsObject.decimalEntryOptions }
     
-    func buildTextValidator() -> TextInputValidator {
+    func buildTextValidator() -> TextEntryValidator {
         formatOptions ?? DoubleFormatOptions()
     }
     
@@ -162,7 +163,7 @@ public protocol IntegerTextInputItem : KeyboardTextInputItem {
 public extension IntegerTextInputItem {
     var answerType: AnswerType { AnswerTypeInteger() }
     
-    func buildTextValidator() -> TextInputValidator {
+    func buildTextValidator() -> TextEntryValidator {
         formatOptions ?? IntegerFormatOptions()
     }
     
@@ -187,7 +188,7 @@ public extension YearTextInputItem {
     
     var keyboardOptions: KeyboardOptions { KeyboardOptionsObject.integerEntryOptions }
     
-    func buildTextValidator() -> TextInputValidator {
+    func buildTextValidator() -> TextEntryValidator {
         formatOptions ?? YearFormatOptions()
     }
     
@@ -210,7 +211,7 @@ public protocol ChoicePickerInputItem : KeyboardTextInputItem, RSDChoiceOptions 
 public extension ChoicePickerInputItem {
     var choices: [RSDChoice] { jsonChoices }
     var keyboardOptions: KeyboardOptions { KeyboardOptionsObject() }
-    func buildTextValidator() -> TextInputValidator { PassThruValidator() }
+    func buildTextValidator() -> TextEntryValidator { PassThruValidator() }
     func buildPickerSource() -> RSDPickerDataSource? { self }
 }
 
@@ -231,7 +232,7 @@ public extension DateTimeInputItem {
     }
     
     
-    func buildTextValidator() -> TextInputValidator {
+    func buildTextValidator() -> TextEntryValidator {
         DateTimeValidator(pickerMode: pickerMode, range: formatOptions)
     }
     

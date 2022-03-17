@@ -34,11 +34,11 @@
 import Foundation
 import JsonModel
 import MobilePassiveData
+import AssessmentModel
 
 /// `RSDSectionStepObject` is used to define a logical subgrouping of steps such as a section in a longer survey or an active
 /// step that includes an instruction step, countdown step, and activity step.
-public struct RSDSectionStepObject: RSDSectionStep, RSDConditionalStepNavigator, RSDStepValidator, RSDCopyStep, Decodable {
-
+public struct RSDSectionStepObject: RSDSectionStep, RSDConditionalStepNavigator, RSDStepValidator, RSDCopyStep, RSDNodeStep, Decodable {
     private enum CodingKeys : String, OrderedEnumCodingKey {
         case stepType = "type", identifier, steps, progressMarkers, asyncActions
     }
@@ -71,7 +71,7 @@ public struct RSDSectionStepObject: RSDSectionStep, RSDConditionalStepNavigator,
     /// Instantiate a step result that is appropriate for this step. The default for this struct is a `RSDTaskResultObject`.
     /// - returns: A result for this step.
     public func instantiateStepResult() -> ResultData {
-        return SectionResultObject(identifier: identifier)
+        return BranchNodeResultObject(identifier: identifier)
     }
     
     /// Validate the steps in this section. The steps are valid if their identifiers are unique and if each step is valid.
@@ -251,4 +251,7 @@ extension RSDSectionStepObject : DocumentableObject {
             ]
         return [jsonA]
     }
+}
+
+extension RSDSectionStepObject : RSDSageResearchTask {
 }

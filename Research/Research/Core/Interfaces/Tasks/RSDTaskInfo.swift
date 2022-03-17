@@ -32,12 +32,13 @@
 //
 
 import Foundation
+import AssessmentModel
 
 
 /// `RSDTaskInfo` includes information to display about a task before the task is fetched.
 /// This can be used to display a collection of tasks and only load the task when selected
 /// by the participant.
-public protocol RSDTaskInfo : RSDCopyWithIdentifier, ContentNode {
+public protocol RSDTaskInfo : CopyWithIdentifier, ContentInfo {
     
     /// A short string that uniquely identifies the task.
     var identifier: String { get }

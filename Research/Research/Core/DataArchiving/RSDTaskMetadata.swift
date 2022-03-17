@@ -33,6 +33,7 @@
 
 import Foundation
 import JsonModel
+import AssessmentModel
 
 /// The metadata for a task result archive that can be zipped using the app developer's choice of
 /// third-party archival tools.
@@ -47,8 +48,6 @@ public struct RSDTaskMetadata : Codable, DocumentableRootObject, DocumentableStr
              taskRunUUID,
              startDate,
              endDate,
-             schemaIdentifier,
-             schemaRevision,
              versionString,
              files
     }
@@ -81,12 +80,6 @@ public struct RSDTaskMetadata : Codable, DocumentableRootObject, DocumentableStr
     /// The timestamp for when the task was ended.
     public let endDate: Date
     
-    /// The identifier for the schema associated with this task result.
-    public let schemaIdentifier: String?
-    
-    /// The revision for the schema associated with this task result.
-    public let schemaRevision: Int?
-    
     /// The version string associated with this task.
     public let versionString: String?
     
@@ -116,14 +109,10 @@ public struct RSDTaskMetadata : Codable, DocumentableRootObject, DocumentableStr
         self.files = files
         if let runResult = taskResult as? AssessmentResult {
             self.taskRunUUID = runResult.taskRunUUID
-            self.schemaIdentifier = runResult.schemaIdentifier
             self.versionString = runResult.versionString
-            self.schemaRevision = Int(runResult.versionString ?? "null")
         }
         else {
             self.taskRunUUID = nil
-            self.schemaIdentifier = nil
-            self.schemaRevision = nil
             self.versionString = nil
         }
     }
@@ -193,12 +182,6 @@ public struct RSDTaskMetadata : Codable, DocumentableRootObject, DocumentableStr
         case .taskRunUUID:
             return .init(propertyType: .primitive(.string),
                          propertyDescription: "The task run UUID.")
-        case .schemaIdentifier:
-            return .init(propertyType: .primitive(.string),
-                         propertyDescription: "The Bridge Exporter 2.0 Schema Identifier used to map to Synapse.")
-        case .schemaRevision:
-            return .init(propertyType: .primitive(.integer),
-                         propertyDescription: "The Bridge Exporter 2.0 Schema Revision used to map to Synapse.")
         case .versionString:
             return .init(propertyType: .primitive(.string),
                          propertyDescription: "A version string that can be used by an assessment to track version.")

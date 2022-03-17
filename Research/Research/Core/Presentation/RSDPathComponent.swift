@@ -33,6 +33,7 @@
 
 import JsonModel
 import Foundation
+import AssessmentModel
 
 
 /// A path component holds state for navigating and displaying a task with a UX that is appropriate to a

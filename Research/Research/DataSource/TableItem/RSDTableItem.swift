@@ -159,6 +159,6 @@ public final class RSDImageTableItem : RSDTableItem {
     ///     - imageTheme:    The image to display.
     public init(rowIndex: Int, imageTheme: RSDImageThemeElement) {
         self.imageTheme = imageTheme
-        super.init(identifier: imageTheme.imageIdentifier, rowIndex: rowIndex, reuseIdentifier: RSDTableItem.ReuseIdentifier.image.rawValue)
+        super.init(identifier: imageTheme.imageName, rowIndex: rowIndex, reuseIdentifier: RSDTableItem.ReuseIdentifier.image.rawValue)
     }
 }

@@ -1,8 +1,7 @@
 //
-//  ResultData+RSDExtensions.swift
-//  Research
+//  ResultData+Bridging.swift
 //
-//  Copyright © 2017-2021 Sage Bionetworks. All rights reserved.
+//  Copyright © 2017-2022 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -33,22 +32,33 @@
 
 import JsonModel
 import Foundation
+import AssessmentModel
+import MobilePassiveData
 
+extension AssessmentResultObject : RSDTaskResult {
+}
+
+extension BranchNodeResultObject : RSDTaskResult {
+}
+
+extension WeatherResult : RSDArchivable {
+}
 
 extension FileResultObject : RSDArchivable {
-    
-    /// Build the archiveable or uploadable data for this result.
-    public func buildArchiveData(at stepPath: String?) throws -> (manifest: RSDFileManifest, data: Data)? {
-        let filename = self.relativePath
-        guard let url = self.url else { return nil }
-        let manifest = RSDFileManifest(filename: filename,
-                                       timestamp: self.startDate,
-                                       contentType: self.contentType,
-                                       identifier: self.identifier,
-                                       stepPath: stepPath,
-                                       jsonSchema: self.jsonSchema)
-        let data = try Data(contentsOf: url)
-        return (manifest, data)
+}
+
+public extension FileArchivable {
+    func buildArchiveData(at stepPath: String?) throws -> (manifest: RSDFileManifest, data: Data)? {
+        try self.buildArchivableFileData(at: stepPath).map {
+            (RSDFileManifest(filename: $0.fileInfo.filename,
+                             timestamp: $0.fileInfo.timestamp,
+                             contentType: $0.fileInfo.contentType,
+                             identifier: $0.fileInfo.identifier,
+                             stepPath: $0.fileInfo.stepPath,
+                             jsonSchema: $0.fileInfo.jsonSchema,
+                             metadata: $0.fileInfo.metadata),
+             $0.data)
+        }
     }
 }
 

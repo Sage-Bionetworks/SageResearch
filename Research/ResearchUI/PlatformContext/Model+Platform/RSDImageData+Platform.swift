@@ -39,8 +39,9 @@ import UIKit
 
 import Foundation
 import Research
+import AssessmentModel
 
-extension RSDSize {
+extension ImageSize {
     
     /// The CGSize represented by this size.
     public var cgSize: CGSize {
