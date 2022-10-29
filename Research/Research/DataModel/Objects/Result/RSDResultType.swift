@@ -60,9 +60,6 @@ extension ResultDataSerializer {
     func libraryExamples() -> [SerializableResultData] {
         [
             RSDTaskResultObject.examples().first!,
-            SectionResultObject(identifier: "example"),
-            RSDResultObject(identifier: "example"),
-            RSDCollectionResultObject(identifier: "example"),
         ]
     }
     
