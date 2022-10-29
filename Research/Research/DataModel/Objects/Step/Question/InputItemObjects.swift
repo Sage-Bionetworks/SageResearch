@@ -33,6 +33,7 @@
 
 import Foundation
 import JsonModel
+import ResultModel
 import Formatters
 
 public final class InputItemSerializer : AbstractPolymorphicSerializer, PolymorphicSerializer {

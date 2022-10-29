@@ -33,6 +33,7 @@
 
 import XCTest
 import JsonModel
+import ResultModel
 @testable import Research
 
 class RecursiveScoreBuilderTests: XCTestCase {

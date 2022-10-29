@@ -33,6 +33,7 @@
 
 import Foundation
 import JsonModel
+import ResultModel
 
 public final class ResultNodeSerializer : IdentifiableInterfaceSerializer, PolymorphicSerializer {
     public var documentDescription: String? {

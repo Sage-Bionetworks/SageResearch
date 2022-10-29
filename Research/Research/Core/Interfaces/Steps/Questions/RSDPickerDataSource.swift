@@ -33,6 +33,7 @@
 
 import Foundation
 import JsonModel
+import ResultModel
 
 /// `RSDPickerDataSource` includes information that can be used to build a picker UI element.
 public protocol RSDPickerDataSource {

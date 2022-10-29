@@ -33,6 +33,7 @@
 
 import Foundation
 import JsonModel
+import ResultModel
 
 /// A result summary step is used to display a result that is calculated or measured earlier in the task.
 open class RSDResultSummaryStepObject: RSDActiveUIStepObject, RSDResultSummaryStep, RSDNavigationSkipRule {

@@ -33,6 +33,7 @@
 
 import Foundation
 import JsonModel
+import ResultModel
 
 public struct JsonSurveyRuleObject : RSDComparableSurveyRule, Codable, Hashable {
     private enum CodingKeys: String, CodingKey, CaseIterable {

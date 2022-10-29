@@ -36,6 +36,7 @@ import Foundation
 import XCTest
 import Research
 import JsonModel
+import ResultModel
 
 class SurveyRuleTests: XCTestCase {
     
